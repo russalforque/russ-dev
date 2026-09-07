@@ -1,19 +1,19 @@
 {
-  "totalPageViews": 2890,
+  "totalPageViews": 2970,
   "visitors": [
     {
       "id": "v-wr3edxx-v6ul",
       "name": "Visitor #V6UL",
       "role": "Visiting Engineer / Recruiter",
-      "avatarId": "sketch-6",
+      "avatarId": "sketch-4",
       "location": "Perth",
       "countryCode": "PH",
       "flag": "🇵🇭",
       "device": "macOS · Safari",
       "currentSection": "projects",
-      "pageViews": 96,
-      "firstSeen": 1788756189140,
-      "lastSeen": 1788756597372
+      "pageViews": 40,
+      "firstSeen": 1788757306387,
+      "lastSeen": 1788757468374
     },
     {
       "id": "v-xvtrvqg-isqy",
@@ -34,16 +34,16 @@
       "id": "v-va9evep-x78e",
       "name": "Visitor #X78E",
       "role": "Visiting Engineer / Recruiter",
-      "avatarId": "sketch-4",
+      "avatarId": "sketch-3",
       "location": "Perth",
       "countryCode": "PH",
       "flag": "🇵🇭",
       "device": "Windows · Chrome",
       "currentSection": "projects",
       "currentUrl": "/",
-      "pageViews": 2,
-      "firstSeen": 1788756185188,
-      "lastSeen": 1788756185189
+      "pageViews": 19,
+      "firstSeen": 1788757339412,
+      "lastSeen": 1788757468373
     },
     {
       "id": "v-e3yb7sw-a6je",
@@ -220,5 +220,5 @@
       "lastSeen": 1788698490257
     }
   ],
-  "updatedAt": "2026-09-07T04:49:59.382Z"
+  "updatedAt": "2026-09-07T05:04:30.383Z"
 }
