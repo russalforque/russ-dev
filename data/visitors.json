@@ -1,5 +1,5 @@
 {
-  "totalPageViews": 3013,
+  "totalPageViews": 3098,
   "visitors": [
     {
       "id": "v-wr3edxx-v6ul",
@@ -41,9 +41,9 @@
       "device": "Windows · Chrome",
       "currentSection": "projects",
       "currentUrl": "/",
-      "pageViews": 4,
-      "firstSeen": 1788943725795,
-      "lastSeen": 1788943741693
+      "pageViews": 7,
+      "firstSeen": 1788967761973,
+      "lastSeen": 1788967773083
     },
     {
       "id": "v-e3yb7sw-a6je",
@@ -220,5 +220,5 @@
       "lastSeen": 1788698490257
     }
   ],
-  "updatedAt": "2026-09-09T08:49:03.692Z"
+  "updatedAt": "2026-09-09T15:29:34.449Z"
 }

@@ -262,6 +262,84 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   liveUrl: "https://philippines-disaster-ready.vercel.app/",
   githubUrl: "https://github.com/russalforque"
 },
+
+{
+  id: "dev-path-ph",
+  number: "06",
+  title: "DEV PATH PH",
+  tagline: "A practical roadmap for becoming a developer",
+  category: "Web Development",
+  role: "Frontend & Web Developer",
+  systemType: "Developer Learning & Roadmap Platform",
+  description: "A production-quality frontend educational platform designed to help aspiring Filipino developers understand what to learn, in what order, and what projects to build. The platform combines structured technology roadmaps, skill dependencies, progress tracking, project recommendations, learning resources, and career guidance into a practical, mobile-first learning experience.",
+  problem: "Aspiring developers often struggle to identify which technologies to learn first, how skills depend on one another, and what projects to build at each stage. Scattered tutorials and generic roadmaps can make learning feel overwhelming and disconnected from real-world development.",
+  solution: "Developed an interactive developer learning platform that organizes skills into practical career roadmaps. Users can explore technology dependencies, view detailed skill guidance, track their learning progress, discover project ideas, access curated resources, and understand the skills required for different developer careers.",
+  technologies: [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "React Router",
+    "Framer Motion",
+    "Lucide React",
+    "LocalStorage",
+    "Responsive Web Design"
+  ],
+  features: [
+    "Frontend, Backend, Full Stack, and DevOps learning roadmaps",
+    "Interactive skill dependency graph with clickable technology nodes",
+    "Detailed skill guides covering prerequisites, learning topics, mistakes, and difficulty",
+    "Persistent learning progress with Not Started / In Progress / Completed states",
+    "Project recommendations mapped to individual roadmap stages",
+    "Curated documentation, tutorials, courses, and practice resources",
+    "FREE / PAID resource labeling without fabricated links",
+    "Career paths covering developer roles, skills, projects, and roadmaps",
+    "Mobile-responsive roadmap flows with vertical dependency layouts",
+    "Dark/light-capable technical editorial interface"
+  ],
+  highlights: "Practical developer education platform combining interactive roadmaps, skill dependency visualization, persistent progress tracking, project-based learning, curated resources, and career planning",
+  liveUrl: "https://dev-route-two.vercel.app/",
+  githubUrl: "https://github.com/russalforque"
+},
+
+{
+  id: "designpath-uiux",
+  number: "07",
+  title: "DesignPath — UI/UX Learning Roadmap",
+  tagline: "Your structured path from UI/UX beginner to job-ready designer",
+  category: "Web Development",
+  role: "Frontend & UX Developer",
+  systemType: "Interactive UI/UX Learning & Roadmap Platform",
+  description: "A production-quality frontend learning platform designed to guide aspiring UI/UX designers from fundamentals to job-ready skills. The experience combines an interactive learning roadmap, skill dependency mapping, progress tracking, project recommendations, resource discovery, UX principles, and daily design challenges into a structured learning journey.",
+  problem: "Aspiring designers often struggle to understand what to learn first, how UX and UI skills connect, and how to turn theory into practical experience. Scattered tutorials and generic checklists provide information but rarely offer a clear, progressive learning path.",
+  solution: "Developed an interactive learning platform that organizes UI/UX education into 12 structured phases, connecting skills through prerequisites and practical exercises. Users can explore detailed skill guides, track progress, bookmark resources, discover portfolio projects, practice daily challenges, and follow personalized recommendations for their next skill.",
+  technologies: [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "React Router",
+    "Framer Motion",
+    "Lucide React",
+    "LocalStorage",
+    "Responsive Web Design"
+  ],
+  features: [
+    "12-phase UI/UX roadmap from fundamentals through portfolio development",
+    "Interactive skill dependency map with prerequisites and related skills",
+    "Detailed skill pages with concepts, exercises, challenges, tools, and resources",
+    "Persistent progress tracking for skills and projects using LocalStorage",
+    "Global skill search with phase, difficulty, and completion filters",
+    "Project library with beginner-to-advanced UX portfolio projects",
+    "Searchable resource library with persistent bookmarks and FREE / PAID labels",
+    "Personalized Continue Learning recommendations based on progress and prerequisites",
+    "UX principles library and daily design challenges",
+    "Accessible, responsive interface with polished dark mode and reduced-motion support"
+  ],
+  highlights: "Interactive UI/UX education platform demonstrating strong information architecture, data-driven React architecture, dependency-based learning flows, persistent client-side state, accessibility-focused UX, responsive design, and practical portfolio development",
+  liveUrl: "https://ui-ux-road-map.vercel.app/",
+  githubUrl: "https://github.com/russalforque"
+}
     
   ],
 
