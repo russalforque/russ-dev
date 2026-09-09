@@ -195,7 +195,73 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   highlights: "Immersive digital campaign blending storytelling, motion, and interactive brand experiences",
   liveUrl: "https://immersive-brand-campaign.vercel.app/",
   githubUrl: "https://github.com/russalforque"
-}
+},
+
+{
+  id: "elan-private-resort",
+  number: "05",
+  title: "Élan Private Resort",
+  tagline: "Luxury hospitality website with immersive island storytelling",
+  category: "Web Development",
+  role: "Frontend & Web Developer",
+  systemType: "Luxury Resort Experience Platform",
+  description: "A premium digital experience for Élan Private Resort, a secluded private-island sanctuary in Palawan, Philippines. The website combines immersive visual storytelling, luxury accommodation showcases, curated experiences, dining, wellness, and destination information into a sophisticated hospitality platform.",
+  problem: "Luxury resorts need more than a traditional informational website to communicate exclusivity and atmosphere. Static layouts can make it difficult for visitors to understand the character of the destination, visualize accommodations, and explore the experiences available before booking.",
+  solution: "Developed an immersive resort website centered around visual storytelling and intuitive exploration. The experience presents the resort's private villas, island experiences, dining, wellness offerings, nature, and arrival journey through large-scale imagery, editorial typography, structured content sections, and responsive interactions.",
+  technologies: ["React", "TypeScript", "Tailwind CSS", "Responsive Web Design", "Interactive UI", "Image-Driven Storytelling"],
+  features: [
+    "Immersive hero section introducing the private-island resort experience",
+    "Interactive resort experience showcase covering beaches, ocean activities, dining, wellness, nature, and sunsets",
+    "Luxury villa presentation with detailed accommodation information, capacities, features, and visual galleries",
+    "Curated visual archive with categorized resort photography and fullscreen viewing",
+    "Fine dining section presenting signature restaurant concepts and tasting experiences",
+    "Wellness experience showcase featuring Hilot healing, sound baths, yoga, and botanical treatments",
+    "Island excursions covering cruises, diving, sailing, kayaking, and rainforest trekking",
+    "Destination and arrival experience section highlighting private seaplane and yacht transfers"
+  ],
+  highlights: "Immersive luxury hospitality experience combining visual storytelling, accommodation discovery, and destination exploration",
+  liveUrl: "https://lan-private-resort.vercel.app/",
+  githubUrl: "https://github.com/russalforque"
+},
+
+{
+  id: "philippines-disaster-ready",
+  number: "05",
+  title: "Philippines Disaster Ready",
+  tagline: "Public-service emergency information and disaster preparedness platform",
+  category: "Web Development",
+  role: "Frontend & Web Developer",
+  systemType: "Disaster Preparedness & Emergency Information Platform",
+  description: "A production-quality frontend information platform designed to help communities across the Philippines quickly understand disaster risks, prepare for emergencies, and access reliable safety information. The experience combines editorial storytelling, live hazard data, emergency resources, interactive preparedness tools, and accessibility-focused UX into a mobile-first public-service website.",
+  problem: "During emergencies, people need clear and trustworthy information quickly. Traditional information-heavy websites can make it difficult to understand what actions to take before, during, and after a disaster, while disconnected resources can force users to search across multiple sources for critical information.",
+  solution: "Developed a mobile-first disaster preparedness platform that organizes emergency information around real user needs. The website provides disaster guides, emergency numbers, active hazard information, interactive preparedness checklists, family planning resources, evacuation guidance, and links to official Philippine agencies while clearly distinguishing live information from educational or demo content.",
+  technologies: [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "React Router",
+    "Lucide React",
+    "Framer Motion",
+    "REST APIs",
+    "LocalStorage",
+    "Responsive Web Design"
+  ],
+ features: [
+  "Mobile-first disaster information and hazard guides",
+  "Live weather and earthquake data with API error handling",
+  "Emergency numbers with mobile-friendly CALL NOW actions",
+  "Interactive Before / During / After disaster guidance",
+  "Persistent emergency kit checklist using LocalStorage",
+  "Family emergency planning and evacuation guidance",
+  "Philippines map with location-based preparedness information",
+  "Trusted official sources with live/demo data transparency",
+  "Accessible, responsive, and performance-optimized interface"
+],
+  highlights: "Trust-focused disaster preparedness platform combining real-world API architecture, emergency UX, accessibility, persistent local interactions, and reliable-source transparency",
+  liveUrl: "https://philippines-disaster-ready.vercel.app/",
+  githubUrl: "https://github.com/russalforque"
+},
     
   ],
 
@@ -226,8 +292,8 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
     "Optimized database performance and application functionality, improving system speed by approximately 30%"
   ]
 },
-    
-    
+
+
   ],
 
   technologies: [
