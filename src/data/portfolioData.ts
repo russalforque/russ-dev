@@ -113,8 +113,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
       description: "A community-centered electricity advisory and power outage tracking platform designed for residents across Cebu. Enables real-time incident reports, scheduled maintenance advisories, and neighborhood grid statuses.",
       problem: "Residents and small business owners in Cebu frequently encounter sudden electrical interruptions with delayed advisories, causing disrupted operations and lack of visibility.",
       solution: "Engineered a high-performance web dashboard that maps power grid notifications, aggregates user outage reports, and delivers real-time feeder advisory updates.",
-      technologies: ["React", "TypeScript", "Tailwind CSS", "REST APIs", "Mapbox / Leaflet"],
-      
+      technologies: [""],      
       features: [
         "Interactive neighborhood power status map",
         "Community outage crowdsourcing & verification",
@@ -136,7 +135,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
       description: "A digital management system created for modern commercial laundry service owners to coordinate customer orders, dispatch pickup schedules, track washing stages, and oversee daily business revenue.",
       problem: "Small laundry business owners struggle with ticket misplacement, untracked weight measurements, unclear washing phases, and delayed customer collection notices.",
       solution: "Developed an intuitive single-page operational hub enabling seamless order creation, automated service stage progression (Wash, Dry, Fold, Ready), and customer SMS/pickup scheduling.",
-      technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "SQL / Database"],
+      technologies: [""],      
       metrics: [
         { label: "Stage Tracking", value: "Real-Time State" },
         { label: "Turnaround Time", value: "Same-Day Ready" },
@@ -163,7 +162,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "An interactive WebAR experience designed to help customers visualize products in their own environment before making a purchase. The platform combines 3D product visualization, spatial interaction, and a minimal interface to create a seamless digital-to-physical shopping journey.",
   problem: "Online shoppers often struggle to understand how a product will look, fit, or feel in their own space. Static product images provide limited context, making it difficult to visualize the real-world experience before buying.",
   solution: "Developed an immersive WebAR experience that allows users to explore products in 3D and preview them within their own environment using their device camera. The experience focuses on intuitive spatial interaction and a streamlined interface that makes product discovery more engaging and informative.",
-  technologies: ["React", "TypeScript", "Tailwind CSS", "WebAR", "3D Product Visualization"],
+      technologies: [""],      
   features: [
     "Interactive 3D product visualization for an immersive browsing experience",
     "WebAR functionality that allows customers to preview products in their own environment",
@@ -185,7 +184,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A digital campaign concept combining interactive storytelling, motion, and immersive content to create a memorable brand experience. Designed to explore how engaging digital experiences can communicate a brand's identity and connect with audiences.",
   problem: "Traditional campaign pages can feel static and fail to capture attention. Brands need more engaging digital experiences that communicate their message while encouraging users to explore and interact.",
   solution: "Developed an immersive campaign website that combines storytelling, motion, and interactive content into a cohesive digital experience. The project focuses on visual engagement, smooth interactions, and a memorable journey from introduction to discovery.",
-  technologies: ["React", "TypeScript", "Tailwind CSS", "Interactive Web Design", "Motion & Animation"],
+      technologies: [""],      
   features: [
     "Interactive storytelling designed to guide users through the campaign experience",
     "Motion-driven transitions and visual elements that enhance engagement",
@@ -208,7 +207,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A premium digital experience for Élan Private Resort, a secluded private-island sanctuary in Palawan, Philippines. The website combines immersive visual storytelling, luxury accommodation showcases, curated experiences, dining, wellness, and destination information into a sophisticated hospitality platform.",
   problem: "Luxury resorts need more than a traditional informational website to communicate exclusivity and atmosphere. Static layouts can make it difficult for visitors to understand the character of the destination, visualize accommodations, and explore the experiences available before booking.",
   solution: "Developed an immersive resort website centered around visual storytelling and intuitive exploration. The experience presents the resort's private villas, island experiences, dining, wellness offerings, nature, and arrival journey through large-scale imagery, editorial typography, structured content sections, and responsive interactions.",
-  technologies: ["React", "TypeScript", "Tailwind CSS", "Responsive Web Design", "Interactive UI", "Image-Driven Storytelling"],
+      technologies: [""],      
   features: [
     "Immersive hero section introducing the private-island resort experience",
     "Interactive resort experience showcase covering beaches, ocean activities, dining, wellness, nature, and sunsets",
@@ -235,18 +234,8 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A production-quality frontend information platform designed to help communities across the Philippines quickly understand disaster risks, prepare for emergencies, and access reliable safety information. The experience combines editorial storytelling, live hazard data, emergency resources, interactive preparedness tools, and accessibility-focused UX into a mobile-first public-service website.",
   problem: "During emergencies, people need clear and trustworthy information quickly. Traditional information-heavy websites can make it difficult to understand what actions to take before, during, and after a disaster, while disconnected resources can force users to search across multiple sources for critical information.",
   solution: "Developed a mobile-first disaster preparedness platform that organizes emergency information around real user needs. The website provides disaster guides, emergency numbers, active hazard information, interactive preparedness checklists, family planning resources, evacuation guidance, and links to official Philippine agencies while clearly distinguishing live information from educational or demo content.",
-  technologies: [
-    "React",
-    "TypeScript",
-    "Vite",
-    "Tailwind CSS",
-    "React Router",
-    "Lucide React",
-    "Framer Motion",
-    "REST APIs",
-    "LocalStorage",
-    "Responsive Web Design"
-  ],
+       technologies: [""],      
+
  features: [
   "Mobile-first disaster information and hazard guides",
   "Live weather and earthquake data with API error handling",
@@ -274,17 +263,8 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A production-quality frontend educational platform designed to help aspiring Filipino developers understand what to learn, in what order, and what projects to build. The platform combines structured technology roadmaps, skill dependencies, progress tracking, project recommendations, learning resources, and career guidance into a practical, mobile-first learning experience.",
   problem: "Aspiring developers often struggle to identify which technologies to learn first, how skills depend on one another, and what projects to build at each stage. Scattered tutorials and generic roadmaps can make learning feel overwhelming and disconnected from real-world development.",
   solution: "Developed an interactive developer learning platform that organizes skills into practical career roadmaps. Users can explore technology dependencies, view detailed skill guidance, track their learning progress, discover project ideas, access curated resources, and understand the skills required for different developer careers.",
-  technologies: [
-    "React",
-    "TypeScript",
-    "Vite",
-    "Tailwind CSS",
-    "React Router",
-    "Framer Motion",
-    "Lucide React",
-    "LocalStorage",
-    "Responsive Web Design"
-  ],
+        technologies: [""],      
+
   features: [
     "Frontend, Backend, Full Stack, and DevOps learning roadmaps",
     "Interactive skill dependency graph with clickable technology nodes",
@@ -313,17 +293,8 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A production-quality frontend learning platform designed to guide aspiring UI/UX designers from fundamentals to job-ready skills. The experience combines an interactive learning roadmap, skill dependency mapping, progress tracking, project recommendations, resource discovery, UX principles, and daily design challenges into a structured learning journey.",
   problem: "Aspiring designers often struggle to understand what to learn first, how UX and UI skills connect, and how to turn theory into practical experience. Scattered tutorials and generic checklists provide information but rarely offer a clear, progressive learning path.",
   solution: "Developed an interactive learning platform that organizes UI/UX education into 12 structured phases, connecting skills through prerequisites and practical exercises. Users can explore detailed skill guides, track progress, bookmark resources, discover portfolio projects, practice daily challenges, and follow personalized recommendations for their next skill.",
-  technologies: [
-    "React",
-    "TypeScript",
-    "Vite",
-    "Tailwind CSS",
-    "React Router",
-    "Framer Motion",
-    "Lucide React",
-    "LocalStorage",
-    "Responsive Web Design"
-  ],
+        technologies: [""],      
+
   features: [
     "12-phase UI/UX roadmap from fundamentals through portfolio development",
     "Interactive skill dependency map with prerequisites and related skills",
@@ -339,7 +310,48 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   highlights: "Interactive UI/UX education platform demonstrating strong information architecture, data-driven React architecture, dependency-based learning flows, persistent client-side state, accessibility-focused UX, responsive design, and practical portfolio development",
   liveUrl: "https://ui-ux-road-map.vercel.app/",
   githubUrl: "https://github.com/russalforque"
+},
+
+
+{
+  id: "personal-developer-portfolio",
+  number: "08",
+  title: "Personal Developer Portfolio",
+  tagline: "My first portfolio website built during my academic journey",
+  category: "Web Development",
+  role: "Student Developer & UI/UX Designer",
+  systemType: "Personal Portfolio Website",
+
+  description: "My first personal portfolio website, developed during my academic journey to document my growth as an aspiring developer and showcase the projects, skills, and experiences I gained while studying Information Technology. It represents an early stage of my journey into web development and UI/UX design.",
+
+  problem: "As a student developer, I needed a way to bring together the projects I worked on during my studies and present my skills and development journey in one place. I also wanted to move beyond simply listing projects and create a website that reflected how I was learning and growing as a developer.",
+
+  solution: "Designed and developed my first personal portfolio website to showcase academic projects, development skills, UI/UX work, and my progression as an aspiring software developer. The project gave me an opportunity to apply what I had learned in web development while experimenting with interface design, responsive layouts, and presenting technical work through a personal website.",
+
+  technologies: [
+  
+  ],
+
+  features: [
+    "Personal introduction and developer profile",
+    "Project showcase for academic and personal projects",
+    "Technical skills and technologies presentation",
+    "Responsive website layout for different screen sizes",
+    "Personalized visual identity and interface design",
+    "Project descriptions highlighting development work",
+    "Contact and professional information",
+    "Portfolio structure designed around personal storytelling"
+  ],
+
+  highlights: "My first developer portfolio built during my academic journey, demonstrating my early experience with web development, responsive design, UI/UX, project presentation, and building a personal digital identity",
+
+  liveUrl: "https://russalforque.github.io/al4k/",
+  githubUrl: "https://github.com/russalforque"
 }
+
+
+
+
     
   ],
 

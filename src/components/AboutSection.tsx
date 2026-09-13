@@ -57,7 +57,7 @@ export default function AboutSection({ onOpenResumeModal }: AboutSectionProps) {
           </div>
 
           <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal max-w-2xl">
-            A brief background on my journey as an entry-level developer in Cebu City, what I value in software, and what drives me to build.
+            A brief background on my journey in software development, what I value in software, and what drives me to build.
           </p>
         </div>
 
@@ -65,8 +65,7 @@ export default function AboutSection({ onOpenResumeModal }: AboutSectionProps) {
         <div className="space-y-6">
           <div className="space-y-3.5 text-sm sm:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed font-normal">
             <p>
-              I graduated with a Bachelor of Science in Information Technology from Asian College of Technology in Cebu. Throughout my studies, internships, and customer service experience, I discovered that I really enjoy two things: designing screens that are easy for anyone to click through, and writing the underlying logic (like C# and databases) that keeps everything working reliably.
-            </p>
+I graduated with a Bachelor of Science in Information Technology from Asian College of Technology in Cebu. Through my studies, internship, and work experience, I discovered that I enjoy both sides of development: designing interfaces that are simple to use and building the underlying logic and databases that make applications reliable.            </p>
             <p>
 I recently completed cloud support training at Accenture, where I gained hands-on knowledge of Docker and Kubernetes. I am now looking for an opportunity to grow with a supportive company as a <strong className="font-semibold text-neutral-950 dark:text-white">Junior .NET Developer</strong> or <strong className="font-semibold text-neutral-950 dark:text-white">Full Stack Developer</strong>.            </p>
           </div>
