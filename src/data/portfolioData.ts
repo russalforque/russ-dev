@@ -347,7 +347,80 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
   liveUrl: "https://russalforque.github.io/al4k/",
   githubUrl: "https://github.com/russalforque"
-}
+},
+
+{
+  id: "appointly",
+  number: "09",
+  title: "Appointly",
+  tagline: "Online booking and scheduling for service businesses",
+  category: "Web Development",
+  role: "Full-Stack Developer & UI/UX Designer",
+  systemType: "Online Booking & Scheduling System",
+
+  description: "Appointly is a web-based booking and scheduling platform that gives service businesses an online booking page, a shared calendar, and a customer list in one place. It was built to replace manual scheduling through calls, chats, and notebooks with a simple system customers and staff can both use.",
+
+  problem: "Many small service businesses still take appointments through phone calls, text messages, and social media chats, then track them by hand. This leads to double bookings, missed appointments, scattered customer information, and time wasted going back and forth with customers just to find an open slot.",
+
+  solution: "Designed and developed a booking platform where customers can view available time slots and book appointments online on their own, while the business manages every appointment from a shared calendar. Customer details are automatically kept in one list, giving the business an organized view of its schedule and clients without manual record-keeping.",
+
+  technologies: [
+ 
+  ],
+
+  features: [
+    "Public online booking page for customers",
+    "Real-time display of available time slots",
+    "Shared calendar for managing appointments across staff",
+    "Centralized customer list and records",
+    "Appointment tracking and management",
+    "Responsive design for desktop and mobile browsers",
+    "Clean, business-friendly interface design",
+    "Cloud deployment for anytime online access"
+  ],
+
+  highlights: "A deployed, production-ready booking platform that digitizes appointment scheduling for service businesses, demonstrating full-stack web development, scheduling logic, responsive UI/UX design, and building software around real business workflows",
+
+  liveUrl: "https://appointly-blond.vercel.app/",
+  githubUrl: "https://github.com/russalforque"
+},
+{
+  id: "sellix-pos",
+  number: "10",
+  title: "Sellix POS",
+  tagline: "A cross-platform point of sale system for phones and tablets",
+  category: "Web Development",
+  role: "Full-Stack Developer & UI/UX Designer",
+  systemType: "Cross-Platform Point of Sale System",
+
+  description: "Sellix POS is a full-featured point-of-sale application built for Android phones and tablets. It brings sales, inventory, products, suppliers, customers, staff management, and reporting into one offline-ready app, and connects to Bluetooth receipt printers and cash drawers so it can run a real store counter.",
+
+  problem: "Small retail stores often rely on handwritten records or expensive POS hardware to track sales and stock. Manual tracking leads to inventory errors, unrecorded sales, and little visibility into cashier activity, while dedicated POS systems are often too costly or complicated for small businesses.",
+
+  solution: "Developed an affordable POS app that turns an ordinary phone or tablet into a complete store system. It handles checkout, stock levels, and sales reports, secures access with role-based staff accounts and shift tracking, prints receipts through Bluetooth printers, and stores data locally with SQLite so the store keeps running without an internet connection. A backup and restore feature protects store records if a device is lost.",
+
+  technologies: [
+    
+  ],
+
+  features: [
+    "Sales and checkout with cart management",
+    "Dashboard overview and sales reports",
+    "Inventory tracking with product and category management",
+    "Supplier and customer record management",
+    "Role-based user accounts for admins and staff",
+    "Shift tracking and shift history for cashier accountability",
+    "Bluetooth receipt printer and cash drawer integration",
+    "Customizable receipts with live preview",
+    "Data backup and restore to a portable file",
+    "Touch-friendly responsive layout for phones and tablets"
+  ],
+
+  highlights: "A complete, offline-ready retail system that runs on everyday mobile devices, demonstrating cross-platform app development with Capacitor, local database design with SQLite, native hardware integration, role-based access control, and touch-first UI/UX design",
+
+  liveUrl: "",
+  githubUrl: "https://github.com/russalforque"
+},
 
 
 
