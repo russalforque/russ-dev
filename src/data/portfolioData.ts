@@ -22,6 +22,8 @@ export interface Project {
   githubUrl?: string;
   figmaUrl?: string;
   highlights?: string;
+  /** Shown as a large card at the top of the work section */
+  featured?: boolean;
   colorAccent?: string;
 }
 
@@ -97,7 +99,7 @@ facebook: "https://www.facebook.com/rhazel.alforque",
 
 instagram: "https://www.instagram.com/ru.uss/",
 
-resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
+resumeDownloadName: "Rhazel Alforque Resume.pdf",
 
 
 
@@ -113,7 +115,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
       description: "A community-centered electricity advisory and power outage tracking platform designed for residents across Cebu. Enables real-time incident reports, scheduled maintenance advisories, and neighborhood grid statuses.",
       problem: "Residents and small business owners in Cebu frequently encounter sudden electrical interruptions with delayed advisories, causing disrupted operations and lack of visibility.",
       solution: "Engineered a high-performance web dashboard that maps power grid notifications, aggregates user outage reports, and delivers real-time feeder advisory updates.",
-      technologies: [""],      
+      technologies: [],      
       features: [
         "Interactive neighborhood power status map",
         "Community outage crowdsourcing & verification",
@@ -126,7 +128,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
     },
     {
       id: "swiftwash",
-      number: "03",
+      number: "02",
       title: "SwiftWash",
       tagline: "Laundry operations & pickup dispatch management system",
       category: "Web Development",
@@ -135,7 +137,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
       description: "A digital management system created for modern commercial laundry service owners to coordinate customer orders, dispatch pickup schedules, track washing stages, and oversee daily business revenue.",
       problem: "Small laundry business owners struggle with ticket misplacement, untracked weight measurements, unclear washing phases, and delayed customer collection notices.",
       solution: "Developed an intuitive single-page operational hub enabling seamless order creation, automated service stage progression (Wash, Dry, Fold, Ready), and customer SMS/pickup scheduling.",
-      technologies: [""],      
+      technologies: [],      
       metrics: [
         { label: "Stage Tracking", value: "Real-Time State" },
         { label: "Turnaround Time", value: "Same-Day Ready" },
@@ -162,7 +164,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "An interactive WebAR experience designed to help customers visualize products in their own environment before making a purchase. The platform combines 3D product visualization, spatial interaction, and a minimal interface to create a seamless digital-to-physical shopping journey.",
   problem: "Online shoppers often struggle to understand how a product will look, fit, or feel in their own space. Static product images provide limited context, making it difficult to visualize the real-world experience before buying.",
   solution: "Developed an immersive WebAR experience that allows users to explore products in 3D and preview them within their own environment using their device camera. The experience focuses on intuitive spatial interaction and a streamlined interface that makes product discovery more engaging and informative.",
-      technologies: [""],      
+      technologies: [],      
   features: [
     "Interactive 3D product visualization for an immersive browsing experience",
     "WebAR functionality that allows customers to preview products in their own environment",
@@ -184,7 +186,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A digital campaign concept combining interactive storytelling, motion, and immersive content to create a memorable brand experience. Designed to explore how engaging digital experiences can communicate a brand's identity and connect with audiences.",
   problem: "Traditional campaign pages can feel static and fail to capture attention. Brands need more engaging digital experiences that communicate their message while encouraging users to explore and interact.",
   solution: "Developed an immersive campaign website that combines storytelling, motion, and interactive content into a cohesive digital experience. The project focuses on visual engagement, smooth interactions, and a memorable journey from introduction to discovery.",
-      technologies: [""],      
+      technologies: [],      
   features: [
     "Interactive storytelling designed to guide users through the campaign experience",
     "Motion-driven transitions and visual elements that enhance engagement",
@@ -207,7 +209,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A premium digital experience for Élan Private Resort, a secluded private-island sanctuary in Palawan, Philippines. The website combines immersive visual storytelling, luxury accommodation showcases, curated experiences, dining, wellness, and destination information into a sophisticated hospitality platform.",
   problem: "Luxury resorts need more than a traditional informational website to communicate exclusivity and atmosphere. Static layouts can make it difficult for visitors to understand the character of the destination, visualize accommodations, and explore the experiences available before booking.",
   solution: "Developed an immersive resort website centered around visual storytelling and intuitive exploration. The experience presents the resort's private villas, island experiences, dining, wellness offerings, nature, and arrival journey through large-scale imagery, editorial typography, structured content sections, and responsive interactions.",
-      technologies: [""],      
+      technologies: [],      
   features: [
     "Immersive hero section introducing the private-island resort experience",
     "Interactive resort experience showcase covering beaches, ocean activities, dining, wellness, nature, and sunsets",
@@ -225,7 +227,8 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
 {
   id: "philippines-disaster-ready",
-  number: "05",
+  featured: true,
+  number: "06",
   title: "Philippines Disaster Ready",
   tagline: "Public-service emergency information and disaster preparedness platform",
   category: "Web Development",
@@ -234,7 +237,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A production-quality frontend information platform designed to help communities across the Philippines quickly understand disaster risks, prepare for emergencies, and access reliable safety information. The experience combines editorial storytelling, live hazard data, emergency resources, interactive preparedness tools, and accessibility-focused UX into a mobile-first public-service website.",
   problem: "During emergencies, people need clear and trustworthy information quickly. Traditional information-heavy websites can make it difficult to understand what actions to take before, during, and after a disaster, while disconnected resources can force users to search across multiple sources for critical information.",
   solution: "Developed a mobile-first disaster preparedness platform that organizes emergency information around real user needs. The website provides disaster guides, emergency numbers, active hazard information, interactive preparedness checklists, family planning resources, evacuation guidance, and links to official Philippine agencies while clearly distinguishing live information from educational or demo content.",
-       technologies: [""],      
+       technologies: [],      
 
  features: [
   "Mobile-first disaster information and hazard guides",
@@ -254,7 +257,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
 {
   id: "dev-path-ph",
-  number: "06",
+  number: "07",
   title: "DEV PATH PH",
   tagline: "A practical roadmap for becoming a developer",
   category: "Web Development",
@@ -263,7 +266,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A production-quality frontend educational platform designed to help aspiring Filipino developers understand what to learn, in what order, and what projects to build. The platform combines structured technology roadmaps, skill dependencies, progress tracking, project recommendations, learning resources, and career guidance into a practical, mobile-first learning experience.",
   problem: "Aspiring developers often struggle to identify which technologies to learn first, how skills depend on one another, and what projects to build at each stage. Scattered tutorials and generic roadmaps can make learning feel overwhelming and disconnected from real-world development.",
   solution: "Developed an interactive developer learning platform that organizes skills into practical career roadmaps. Users can explore technology dependencies, view detailed skill guidance, track their learning progress, discover project ideas, access curated resources, and understand the skills required for different developer careers.",
-        technologies: [""],      
+        technologies: [],      
 
   features: [
     "Frontend, Backend, Full Stack, and DevOps learning roadmaps",
@@ -284,7 +287,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
 {
   id: "designpath-uiux",
-  number: "07",
+  number: "08",
   title: "DesignPath — UI/UX Learning Roadmap",
   tagline: "Your structured path from UI/UX beginner to job-ready designer",
   category: "Web Development",
@@ -293,7 +296,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   description: "A production-quality frontend learning platform designed to guide aspiring UI/UX designers from fundamentals to job-ready skills. The experience combines an interactive learning roadmap, skill dependency mapping, progress tracking, project recommendations, resource discovery, UX principles, and daily design challenges into a structured learning journey.",
   problem: "Aspiring designers often struggle to understand what to learn first, how UX and UI skills connect, and how to turn theory into practical experience. Scattered tutorials and generic checklists provide information but rarely offer a clear, progressive learning path.",
   solution: "Developed an interactive learning platform that organizes UI/UX education into 12 structured phases, connecting skills through prerequisites and practical exercises. Users can explore detailed skill guides, track progress, bookmark resources, discover portfolio projects, practice daily challenges, and follow personalized recommendations for their next skill.",
-        technologies: [""],      
+        technologies: [],      
 
   features: [
     "12-phase UI/UX roadmap from fundamentals through portfolio development",
@@ -315,7 +318,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
 {
   id: "personal-developer-portfolio",
-  number: "08",
+  number: "09",
   title: "Personal Developer Portfolio",
   tagline: "My first portfolio website built during my academic journey",
   category: "Web Development",
@@ -328,9 +331,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
   solution: "Designed and developed my first personal portfolio website to showcase academic projects, development skills, UI/UX work, and my progression as an aspiring software developer. The project gave me an opportunity to apply what I had learned in web development while experimenting with interface design, responsive layouts, and presenting technical work through a personal website.",
 
-  technologies: [
-  
-  ],
+  technologies: [],
 
   features: [
     "Personal introduction and developer profile",
@@ -351,7 +352,8 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
 {
   id: "appointly",
-  number: "09",
+  featured: true,
+  number: "10",
   title: "Appointly",
   tagline: "Online booking and scheduling for service businesses",
   category: "Web Development",
@@ -364,9 +366,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
   solution: "Designed and developed a booking platform where customers can view available time slots and book appointments online on their own, while the business manages every appointment from a shared calendar. Customer details are automatically kept in one list, giving the business an organized view of its schedule and clients without manual record-keeping.",
 
-  technologies: [
- 
-  ],
+  technologies: ["React", "TypeScript", "Tailwind CSS"],
 
   features: [
     "Public online booking page for customers",
@@ -386,7 +386,8 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 },
 {
   id: "sellix-pos",
-  number: "10",
+  featured: true,
+  number: "11",
   title: "Sellix POS",
   tagline: "A cross-platform point of sale system for phones and tablets",
   category: "Web Development",
@@ -399,9 +400,7 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
   solution: "Developed an affordable POS app that turns an ordinary phone or tablet into a complete store system. It handles checkout, stock levels, and sales reports, secures access with role-based staff accounts and shift tracking, prints receipts through Bluetooth printers, and stores data locally with SQLite so the store keeps running without an internet connection. A backup and restore feature protects store records if a device is lost.",
 
-  technologies: [
-    
-  ],
+  technologies: ["React", "TypeScript", "Tailwind CSS", "Capacitor", "SQLite"],
 
   features: [
     "Sales and checkout with cart management",
@@ -425,7 +424,37 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
 
 
 
-    
+{
+  id: "ojt-timesheet",
+  featured: true,
+  number: "12",
+  title: "OJT Timesheet Monitoring System",
+  tagline: "Role-based timesheet and attendance tracking for OJT programs",
+  category: "Full Stack",
+  role: "Full-Stack Developer (Thesis Project)",
+  systemType: "Role-Based Monitoring System",
+
+  description: "A role-based OJT Timesheet Monitoring System built as my thesis project with C# and ASP.NET Core MVC. It gives administrators and trainees separate workspaces for assigning tasks, logging timesheets, tracking attendance, and generating reports.",
+
+  problem: "Monitoring on-the-job training hours is often done with paper logs and spreadsheets, which makes it hard to assign work, verify attendance, and produce accurate reports for each trainee.",
+
+  solution: "Developed a web application with separate Admin and Trainee roles that centralizes task assignment, timesheet management, attendance tracking, and reporting. SQL Server and Entity Framework Core keep all records in one place for accurate attendance monitoring.",
+
+  technologies: ["C#", "ASP.NET Core", "ASP.NET MVC", "Entity Framework", "SQL Server"],
+
+  features: [
+    "Separate Admin and Trainee roles and functionality",
+    "Task assignment from administrators to trainees",
+    "Timesheet management and logging",
+    "Attendance tracking",
+    "Reporting to streamline OJT monitoring",
+    "Centralized data management with SQL Server and Entity Framework Core"
+  ],
+
+  highlights: "My thesis project and core .NET work: a role-based ASP.NET Core MVC application with SQL Server and Entity Framework Core",
+
+  githubUrl: "https://github.com/russalforque"
+},
   ],
 
   experience: [
@@ -462,19 +491,19 @@ resumeDownloadName: "Rhazel Avenido Alforque Resume.pdf",
   technologies: [
     {
       category: "Frontend",
-      items: ["React", "TypeScript", "Vue.js", "Tailwind CSS", "JavaScript", "HTML5", "CSS3", "Bootstrap"]
+      items: ["React", "TypeScript", "Vue.js", "Tailwind CSS", "JavaScript", "HTML5", "CSS3", "Bootstrap", "Capacitor"]
     },
     {
       category: "Backend",
-      items: ["C#", ".NET", "ASP.NET Core", "ASP.NET MVC", "Entity Framework", "REST APIs", "Node.js"]
+      items: ["C#", ".NET", "ASP.NET Core", "ASP.NET MVC", "Entity Framework", "REST APIs", "Node.js", "Python"]
     },
     {
       category: "Database",
-      items: ["SQL Server", "MySQL", "MongoDB", "Database Design"]
+      items: ["SQL Server", "MySQL", "SQLite", "MongoDB", "Database Design"]
     },
     {
       category: "Cloud / DevOps",
-      items: ["Docker", "Kubernetes", "GCP", "Git & GitHub", "CI/CD Workflows", "Linux / CLI"]
+      items: ["Docker", "Kubernetes", "GCP", "AWS", "Git & GitHub", "CI/CD Workflows", "Linux / CLI"]
     }
   ],
 

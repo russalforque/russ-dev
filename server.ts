@@ -396,6 +396,12 @@ async function startServer() {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
+      // Requests for files (e.g. /assets/resume.pdf) that don't exist should 404,
+      // not silently render the homepage. Only extension-less routes get the SPA.
+      if (path.extname(req.path)) {
+        res.status(404).send('Not found');
+        return;
+      }
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }

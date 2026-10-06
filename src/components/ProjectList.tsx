@@ -1,6 +1,8 @@
-import { ArrowUpRight, Filter, X, Github } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Filter, X } from 'lucide-react';
 import { Project } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
+import Section, { Em } from './ui/Section';
+import Reveal from './ui/Reveal';
 
 export interface ProjectsProps {
   projects: Project[];
@@ -9,159 +11,204 @@ export interface ProjectsProps {
   onClearTechFilter?: () => void;
 }
 
+export function hostname(url?: string) {
+  if (!url) return '';
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
+
+function LiveLink({ project }: { project: Project }) {
+  if (!project.liveUrl) return null;
+  return (
+    <a
+      href={project.liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => {
+        e.stopPropagation();
+        soundManager.playTick(1000);
+      }}
+      className="relative z-10 inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-1 font-mono text-[11px] text-muted transition-colors hover:border-accent hover:text-accent"
+      aria-label={`Open live site for ${project.title}`}
+    >
+      Live
+      <ArrowUpRight className="h-3 w-3" />
+    </a>
+  );
+}
+
+function FeaturedCard({ project, onSelect }: { project: Project; onSelect: () => void }) {
+  return (
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-[0_24px_48px_-28px_rgba(0,0,0,0.35)]">
+      {/* Visual header: oversized index + domain, no screenshots needed */}
+      <div className="relative h-40 overflow-hidden border-b border-line bg-surface-2 sm:h-48">
+        <div className="bg-grid absolute inset-0 opacity-60" aria-hidden="true" />
+        <span
+          aria-hidden="true"
+          className="absolute -bottom-8 -right-2 font-serif text-[9rem] italic leading-none text-fg/[0.07] transition-colors duration-500 group-hover:text-accent/25 sm:text-[11rem]"
+        >
+          {project.number}
+        </span>
+        <div className="absolute left-5 right-5 top-5 flex items-center gap-2 font-mono text-[11px] text-muted">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+          <span className="truncate">{project.systemType}</span>
+        </div>
+        {project.liveUrl && (
+          <div className="absolute bottom-5 left-5 font-mono text-[11px] text-faint">{hostname(project.liveUrl)}</div>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <h3 className="text-xl font-semibold tracking-[-0.02em] text-fg sm:text-2xl">
+          <button
+            type="button"
+            onClick={onSelect}
+            className="cursor-pointer text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+          >
+            {project.title}
+          </button>
+        </h3>
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted">{project.tagline}</p>
+
+        <div className="mt-auto flex items-center justify-between gap-3 pt-6">
+          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-fg">
+            Case study
+            <ArrowRight className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1" />
+          </span>
+          <LiveLink project={project} />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function IndexRow({ project, onSelect }: { project: Project; onSelect: () => void }) {
+  return (
+    <li className="group relative">
+      <div className="grid grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-4 gap-y-1 py-5 transition-colors sm:grid-cols-[3rem_minmax(0,1.1fr)_minmax(0,1.4fr)_auto] sm:gap-x-6">
+        <span className="font-mono text-xs text-faint transition-colors group-hover:text-accent">
+          {project.number}
+        </span>
+        <h3 className="text-base font-semibold tracking-[-0.01em] text-fg sm:text-lg">
+          <button
+            type="button"
+            onClick={onSelect}
+            className="cursor-pointer text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+          >
+            <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
+              {project.title}
+            </span>
+          </button>
+        </h3>
+        <p className="col-start-2 text-sm leading-relaxed text-muted sm:col-start-auto">{project.tagline}</p>
+        <div className="col-start-3 row-start-1 flex justify-end sm:col-start-auto sm:row-start-auto">
+          {project.liveUrl ? (
+            <LiveLink project={project} />
+          ) : (
+            <ArrowRight className="h-4 w-4 text-faint transition-all group-hover:translate-x-0.5 group-hover:text-fg" />
+          )}
+        </div>
+      </div>
+    </li>
+  );
+}
+
 export default function ProjectList({
   projects,
+  onSelectProject,
   selectedTechFilter,
   onClearTechFilter,
 }: ProjectsProps) {
-  // Filter projects by selected technology if active
-  const displayedProjects = selectedTechFilter
-    ? projects.filter((p) =>
-        p.technologies.some((t) => t.toLowerCase() === selectedTechFilter.toLowerCase())
-      )
+  const filtered = selectedTechFilter
+    ? projects.filter((p) => p.technologies.some((t) => t.toLowerCase() === selectedTechFilter.toLowerCase()))
     : projects;
 
+  // When filtering, show a flat list; otherwise split featured from the archive.
+  const featured = selectedTechFilter ? [] : filtered.filter((p) => p.featured);
+  const rest = selectedTechFilter ? filtered : filtered.filter((p) => !p.featured);
+
+  const select = (project: Project) => {
+    soundManager.playTick(1000);
+    onSelectProject?.(project);
+  };
+
+  const clear = () => {
+    soundManager.playTick(900);
+    onClearTechFilter?.();
+  };
+
   return (
-    <section 
-      id="projects" 
-      aria-label="Featured Projects"
-      className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full border-t border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950"
+    <Section
+      id="projects"
+      index="01"
+      label="Work"
+      title={
+        <>
+          Selected <Em>work</Em>
+        </>
+      }
+      intro="Web applications and systems I've designed and built — from offline-first retail software to public-service platforms. Open any project for the full case study."
+      aside={<span className="font-mono text-xs text-muted">{filtered.length} projects</span>}
     >
-      <div className="space-y-10 sm:space-y-12">
-        
-        {/* HEADER */}
-        <div className="space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-            <h2 className="text-3xl sm:text-4xl font-normal tracking-tight text-neutral-950 dark:text-white font-mono lowercase">
-              projects
-            </h2>
-            <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
-              {displayedProjects.length} {displayedProjects.length === 1 ? 'project' : 'projects'}
-            </span>
-          </div>
-
-          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal max-w-2xl">
-            A selection of web applications and software systems I have designed and built — focusing on intuitive interfaces and dependable backends.
-          </p>
+      {selectedTechFilter && (
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm">
+          <span className="flex items-center gap-2 text-muted">
+            <Filter className="h-4 w-4 text-accent" />
+            Built with <strong className="font-mono font-medium text-fg">{selectedTechFilter}</strong>
+          </span>
+          <button
+            type="button"
+            onClick={clear}
+            className="inline-flex cursor-pointer items-center gap-1 font-mono text-xs text-muted transition-colors hover:text-fg"
+          >
+            Clear <X className="h-3 w-3" />
+          </button>
         </div>
+      )}
 
-        {/* ACTIVE FILTER BANNER */}
-        {selectedTechFilter && (
-          <div className="p-3.5 sm:p-4 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-950 flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300">
-              <Filter className="h-3.5 w-3.5 text-neutral-950 dark:text-white" />
-              <span>Filtered by tool:</span>
-              <strong className="px-2 py-0.5 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-950 dark:text-white font-mono">
-                {selectedTechFilter}
-              </strong>
+      {filtered.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-line-strong p-10 text-center">
+          <p className="text-sm text-muted">No projects tagged with “{selectedTechFilter}” yet.</p>
+          <button
+            type="button"
+            onClick={clear}
+            className="mt-4 inline-flex h-10 cursor-pointer items-center rounded-full bg-fg px-4 text-sm font-medium text-bg"
+          >
+            View all projects
+          </button>
+        </div>
+      ) : (
+        <>
+          {featured.length > 0 && (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+              {featured.map((project, i) => (
+                <Reveal key={project.id} delay={(i % 2) * 0.08} className="h-full">
+                  <FeaturedCard project={project} onSelect={() => select(project)} />
+                </Reveal>
+              ))}
             </div>
+          )}
 
-            {onClearTechFilter && (
-              <button
-                type="button"
-                onClick={() => {
-                  soundManager.playTick(900);
-                  onClearTechFilter();
-                }}
-                className="inline-flex items-center gap-1 font-mono text-neutral-500 hover:text-neutral-950 dark:hover:text-white cursor-pointer transition-colors"
-              >
-                <span>Clear filter</span>
-                <X className="h-3 w-3" />
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* EMPTY STATE */}
-        {displayedProjects.length === 0 ? (
-          <div className="p-8 sm:p-10 rounded-2xl border border-dashed border-neutral-300 dark:border-neutral-800 text-center space-y-3 bg-neutral-50/50 dark:bg-neutral-950">
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              No projects found matching &ldquo;{selectedTechFilter}&rdquo;.
-            </p>
-            {onClearTechFilter && (
-              <button
-                type="button"
-                onClick={() => {
-                  soundManager.playTick(900);
-                  onClearTechFilter();
-                }}
-                className="px-4 py-2 text-xs font-semibold rounded-lg bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors cursor-pointer"
-              >
-                View All Projects
-              </button>
-            )}
-          </div>
-        ) : (
-          /* EDITORIAL LIST */
-          <div className="divide-y divide-neutral-100 dark:divide-neutral-800/80">
-            {displayedProjects.map((project) => {
-              const destinationUrl = project.liveUrl || project.githubUrl || '#';
-
-              return (
-                <article
-                  key={project.id}
-                  id={`project-row-${project.id}`}
-                  className="group relative p-4 sm:py-6 sm:px-5 -mx-4 sm:-mx-5 rounded-xl transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900/50 select-none"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 items-start">
-                    
-                    {/* Left Column: Project Title (Direct Anchor Tag) */}
-                    <div className="sm:col-span-4">
-                      <h3 className="text-base sm:text-lg font-bold text-neutral-950 dark:text-white tracking-tight group-hover:underline underline-offset-4 decoration-neutral-300 dark:decoration-neutral-600">
-                        <a
-                          href={destinationUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => soundManager.playTick(1000)}
-                          className="focus:outline-none"
-                        >
-                          {/* Stretches the link to cover the entire card */}
-                          <span className="absolute inset-0 rounded-xl" aria-hidden="true" />
-                          {project.title}
-                        </a>
-                      </h3>
-                    </div>
-
-                    {/* Center Column: Category & Description */}
-                    <div className="sm:col-span-7 space-y-1.5">
-                      <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 font-semibold">
-                        {project.category || 'APPLICATION'}
-                      </div>
-
-                      <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed font-normal">
-                        {project.description}
-                      </p>
-
-                      {/* Subtle Tech Stack Footnote */}
-                      {project.technologies && project.technologies.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-1.5 pt-1.5 text-xs font-mono text-neutral-500 dark:text-neutral-400">
-                          {project.technologies.map((tech, tIdx) => (
-                            <span key={tech} className="inline-flex items-center">
-                              <span>{tech}</span>
-                              {tIdx < project.technologies.length - 1 && (
-                                <span className="text-neutral-300 dark:text-neutral-700 mx-1.5">·</span>
-                              )}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Right Column: Arrow Link Indicator */}
-                    <div className="hidden sm:flex sm:col-span-1 justify-end pt-0.5">
-                      <ArrowUpRight className="h-4 w-4 text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-950 dark:group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                    </div>
-
-                  </div>
-
-                 
-                </article>
-              );
-            })}
-          </div>
-        )}
-
-      </div>
-    </section>
+          {rest.length > 0 && (
+            <Reveal className={featured.length > 0 ? 'mt-16' : ''}>
+              {featured.length > 0 && (
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="eyebrow">Archive</span>
+                  <span className="font-mono text-[11px] text-faint">{rest.length} more</span>
+                </div>
+              )}
+              <ul className="divide-y divide-line border-y border-line">
+                {rest.map((project) => (
+                  <IndexRow key={project.id} project={project} onSelect={() => select(project)} />
+                ))}
+              </ul>
+            </Reveal>
+          )}
+        </>
+      )}
+    </Section>
   );
 }

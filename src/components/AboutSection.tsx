@@ -1,104 +1,65 @@
-import { useState, useEffect } from 'react';
-import { 
-  ArrowRight, 
-  ArrowLeft, 
-  ExternalLink, 
-  MapPin, 
-  GraduationCap, 
-  CheckCircle2, 
-  User, 
-  Code,
-  HelpCircle,
-  MessageSquareHeart,
-  ShieldCheck
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 import { soundManager } from '../utils/sound';
+import { RESUME_URL } from '../utils/resume';
+import Section, { Em } from './ui/Section';
+import Reveal from './ui/Reveal';
 
-interface AboutSectionProps {
-  onOpenResumeModal: () => void;
-}
+const FACTS = [
+  { k: 'Based in', v: 'Cebu City, Philippines' },
+  { k: 'Education', v: 'BS Information Technology — Asian College of Technology' },
+  { k: 'Core tools', v: 'C#, ASP.NET Core, React, SQL Server' },
+  { k: 'Looking for', v: 'Junior .NET / Full-Stack roles' },
+];
 
-interface Chapter {
-  id: string;
-  stepNumber: string;
-  period: string;
-  tabLabel: string;
-  headline: string;
-  story: string;
-  keyPoints: string[];
-  toolsUsed: string[];
-}
-
-
-
-
-export default function AboutSection({ onOpenResumeModal }: AboutSectionProps) {
-  
-
-
+export default function AboutSection() {
   return (
-    <section 
-      id="about" 
-      aria-label="About Rhazel Alforque"
-      className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full border-t border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950"
+    <Section
+      id="about"
+      index="05"
+      label="About"
+      title={
+        <>
+          I like working on <Em>both sides</Em> of the stack.
+        </>
+      }
     >
-      <div className="space-y-10 sm:space-y-12">
-        
-        {/* HEADER (Matching experience & tech stack style) */}
-        <div className="space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-            <h2 className="text-3xl sm:text-4xl font-normal tracking-tight text-neutral-950 dark:text-white font-mono lowercase">
-              about
-            </h2>
-            <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
-              [background &amp; principles]
-            </span>
-          </div>
-
-          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal max-w-2xl">
-            A brief background on my journey in software development, what I value in software, and what drives me to build.
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-9">
+        <Reveal className="space-y-5 text-pretty text-base leading-relaxed text-fg/80 sm:text-lg lg:col-span-5">
+          <p>
+            I graduated with a Bachelor of Science in Information Technology from Asian College of Technology in Cebu.
+            Through my studies, internship, and work experience, I found that I enjoy both sides of development:
+            designing interfaces that are simple to use, and building the logic and databases that make applications
+            reliable.
           </p>
-        </div>
+          <p>
+            I recently completed cloud support training at Accenture, where I gained hands-on knowledge of Docker and
+            Kubernetes. Now I'm looking for a supportive team to grow with as a{' '}
+            <strong className="font-semibold text-fg">Junior .NET Developer</strong> or{' '}
+            <strong className="font-semibold text-fg">Full Stack Developer</strong>.
+          </p>
+          <a
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => soundManager.playTick(1000)}
+            className="group inline-flex items-center gap-2 pt-2 text-sm font-medium text-fg"
+          >
+            <span className="border-b border-accent pb-0.5">Read the full résumé</span>
+            <ArrowRight className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1" />
+          </a>
+        </Reveal>
 
-        {/* OVERVIEW & QUICK FACTS */}
-        <div className="space-y-6">
-          <div className="space-y-3.5 text-sm sm:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed font-normal">
-            <p>
-I graduated with a Bachelor of Science in Information Technology from Asian College of Technology in Cebu. Through my studies, internship, and work experience, I discovered that I enjoy both sides of development: designing interfaces that are simple to use and building the underlying logic and databases that make applications reliable.            </p>
-            <p>
-I recently completed cloud support training at Accenture, where I gained hands-on knowledge of Docker and Kubernetes. I am now looking for an opportunity to grow with a supportive company as a <strong className="font-semibold text-neutral-950 dark:text-white">Junior .NET Developer</strong> or <strong className="font-semibold text-neutral-950 dark:text-white">Full Stack Developer</strong>.            </p>
-          </div>
-
-          {/* Quick Facts with Row & Column Line Separators */}
-<div className="border-y border-neutral-200 dark:border-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-800 text-xs sm:text-sm">
-  <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-200 dark:divide-neutral-800">
-    <div className="py-2.5 sm:pr-4 flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-      <MapPin className="h-4 w-4 text-neutral-900 dark:text-white shrink-0" />
-      <span><strong>Location:</strong> Cebu City, Philippines</span>
-    </div>
-    <div className="py-2.5 sm:pl-4 flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-      <GraduationCap className="h-4 w-4 text-neutral-900 dark:text-white shrink-0" />
-      <span><strong>Education:</strong> BSIT (Asian Coll. of Tech)</span>
-    </div>
-  </div>
-
-  <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-200 dark:divide-neutral-800">
-    <div className="py-2.5 sm:pr-4 flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-      <Code className="h-4 w-4 text-neutral-900 dark:text-white shrink-0" />
-      <span><strong>Core Tools:</strong> C#, ASP.NET, React, SQL Server</span>
-    </div>
-    <div className="py-2.5 sm:pl-4 flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-      <User className="h-4 w-4 text-neutral-900 dark:text-white shrink-0" />
-      <span><strong>Looking for:</strong> Junior .NET / Full-Stack Roles</span>
-    </div>
-  </div>
-</div>
-        </div>
-
-        
-
+        <Reveal delay={0.1} className="lg:col-span-4">
+          <dl className="divide-y divide-line border-y border-line">
+            {FACTS.map((f) => (
+              <div key={f.k} className="grid grid-cols-[7rem_1fr] gap-4 py-4">
+                <dt className="eyebrow pt-0.5">{f.k}</dt>
+                <dd className="text-sm text-fg">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
       </div>
-    </section>
+    </Section>
   );
 }

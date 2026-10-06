@@ -1,28 +1,27 @@
 import { useState, useEffect, useCallback } from 'react';
+import { MotionConfig } from 'motion/react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import ProjectList from './components/ProjectList';
 import ProjectModal from './components/ProjectModal';
 import ExperienceTimeline from './components/ExperienceTimeline';
 import TechStack from './components/TechStack';
-import GitHubActivity from './components/GitHubActivity'; // 👈 Added
+import GitHubActivity from './components/GitHubActivity';
 import AboutSection from './components/AboutSection';
 import CertificationsList from './components/CertificationsList';
 import CertificateModal from './components/CertificateModal';
 import ContactSection from './components/ContactSection';
 import CommandPalette from './components/CommandPalette';
-import ResumeModal from './components/ResumeModal';
-import CustomCursor from './components/CustomCursor';
 import TerminalDrawer from './components/TerminalDrawer';
 import LiveViewersBadge from './components/LiveViewersBadge';
 import { usePresence } from './utils/presence';
 import { portfolioData, Project, CertificateItem } from './data/portfolioData';
 import { soundManager } from './utils/sound';
+import { openResume } from './utils/resume';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedCertificate, setSelectedCertificate] = useState<CertificateItem | null>(null);
-  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isVisitorsModalOpen, setIsVisitorsModalOpen] = useState(false);
@@ -84,11 +83,8 @@ export default function App() {
 
   // Smooth navigation to section
   const handleNavigate = useCallback((sectionId: string) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      const topOffset = el.getBoundingClientRect().top + window.scrollY - 70;
-      window.scrollTo({ top: topOffset, behavior: 'smooth' });
-    }
+    // Offset for the sticky header comes from html { scroll-padding-top }
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   // Global Keyboard shortcuts
@@ -168,8 +164,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#090a0c] text-[#121212] dark:text-[#ededed] font-sans antialiased relative selection:bg-neutral-900 selection:text-white dark:selection:bg-neutral-100 dark:selection:text-neutral-950 transition-colors duration-200">
-      <CustomCursor />
+    <MotionConfig reducedMotion="user">
+    <div className="relative min-h-screen bg-bg font-sans text-fg antialiased">
+      <a
+        href="#projects"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:text-bg"
+      >
+        Skip to content
+      </a>
 
       <Navigation
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
@@ -182,12 +184,11 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="mx-auto max-w-5xl px-4 sm:px-6">
+      <main>
         {/* Hero Section */}
         <Hero
           onCopyEmail={handleCopyEmail}
           copied={copiedEmail}
-          onOpenResumeModal={() => setIsResumeModalOpen(true)}
           onOpenTerminal={() => setIsTerminalOpen(true)}
           onlineCount={presence.onlineCount}
           activeViewers={presence.activeViewers}
@@ -219,7 +220,6 @@ export default function App() {
 
         {/* 05 About Section */}
         <AboutSection
-          onOpenResumeModal={() => setIsResumeModalOpen(true)}
         />
 
         {/* 06 Certifications List */}
@@ -239,7 +239,7 @@ export default function App() {
         isOpen={isTerminalOpen}
         onClose={() => setIsTerminalOpen(false)}
         onOpenProject={(project) => setSelectedProject(project)}
-        onOpenResume={() => setIsResumeModalOpen(true)}
+        onOpenResume={openResume}
         onToggleTheme={handleToggleTheme}
         darkMode={darkMode}
         onCopyEmail={handleCopyEmail}
@@ -254,15 +254,15 @@ export default function App() {
             soundManager.playTick(1200);
             setIsTerminalOpen(true);
           }}
-          className="fixed bottom-5 right-5 z-30 hidden sm:inline-flex items-center gap-2 rounded-full border border-neutral-300/80 dark:border-neutral-700 bg-white/90 dark:bg-neutral-900/90 px-3.5 py-1.5 text-xs font-mono text-neutral-800 dark:text-neutral-200 shadow-lg hover:shadow-xl hover:border-neutral-900 dark:hover:border-white transition-all duration-200 cursor-pointer backdrop-blur-md"
+          className="fixed bottom-5 right-5 z-30 hidden cursor-pointer items-center gap-2 rounded-full border border-line bg-surface/90 px-3.5 py-2 font-mono text-xs text-fg shadow-lg backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong sm:inline-flex"
           title="Open Interactive Developer CLI (Shortcut: ~)"
         >
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
           </span>
-          <span className="font-semibold text-emerald-600 dark:text-emerald-400">&gt;_ CLI</span>
-          <kbd className="text-[10px] text-neutral-400 dark:text-neutral-500 rounded bg-neutral-100 dark:bg-neutral-800 px-1 py-0.2">
+          <span className="font-medium">&gt;_ terminal</span>
+          <kbd className="rounded bg-surface-2 px-1.5 py-0.5 text-[10px] text-muted">
             ~
           </kbd>
         </button>
@@ -276,11 +276,6 @@ export default function App() {
       <CertificateModal
         certificate={selectedCertificate}
         onClose={() => setSelectedCertificate(null)}
-      />
-
-      <ResumeModal
-        isOpen={isResumeModalOpen}
-        onClose={() => setIsResumeModalOpen(false)}
       />
 
       <CommandPalette
@@ -297,5 +292,6 @@ export default function App() {
         onOpenVisitorsModal={() => setIsVisitorsModalOpen(true)}
       />
     </div>
+    </MotionConfig>
   );
 }

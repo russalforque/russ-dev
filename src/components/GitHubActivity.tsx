@@ -1,56 +1,74 @@
-import { GitHubCalendar } from 'react-github-calendar'; // 👈 Added brackets {}
-import { Github, ArrowUpRight } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { GitHubCalendar } from 'react-github-calendar';
+import { ArrowUpRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import Section, { Em } from './ui/Section';
+import Reveal from './ui/Reveal';
 
 interface GitHubActivityProps {
   darkMode?: boolean;
 }
 
+const username = portfolioData.github.split('/').filter(Boolean).pop() ?? '';
+
 export default function GitHubActivity({ darkMode }: GitHubActivityProps) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  // On narrow screens the calendar overflows; start scrolled to the most recent
+  // weeks. It renders async after fetching, so re-pin whenever its DOM changes.
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const pinRight = () => {
+      el.scrollLeft = el.scrollWidth;
+    };
+    pinRight();
+    const observer = new MutationObserver(pinRight);
+    observer.observe(el, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section 
-      id="github-activity" 
-      aria-label="GitHub Contributions"
-      className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full border-t border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100"
+    <Section
+      id="github-activity"
+      index="04"
+      label="Activity"
+      title={
+        <>
+          Building in <Em>public</Em>
+        </>
+      }
+      aside={
+        <a
+          href={portfolioData.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 font-mono text-xs text-muted transition-colors hover:text-accent"
+        >
+          @{username}
+          <ArrowUpRight className="h-3 w-3" />
+        </a>
+      }
     >
-      <div className="space-y-6">
-        
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-          <div className="flex items-center gap-2">
-            <Github className="h-4 w-4 text-neutral-950 dark:text-white" />
-            <h2 className="text-2xl sm:text-3xl font-mono lowercase tracking-tight text-neutral-950 dark:text-white">
-              github
-            </h2>
-          </div>
-
-          <a
-            href={portfolioData.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs font-mono text-neutral-500 hover:text-neutral-950 dark:hover:text-white underline underline-offset-4 transition-colors"
-          >
-            <span>@russalforque</span>
-            <ArrowUpRight className="h-3 w-3" />
-          </a>
-        </div>
-
-        {/* Contribution Graph Box */}
-        <div className="p-4 sm:p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40 overflow-x-auto flex justify-center">
+      <Reveal>
+        <div
+          ref={scrollerRef}
+          className="overflow-x-auto overscroll-x-contain rounded-2xl border border-line bg-surface p-4 text-muted sm:p-7"
+        >
           <GitHubCalendar
-            username="russalforque"
+            username={username}
             colorScheme={darkMode ? 'dark' : 'light'}
-            blockSize={12}
+            blockSize={11}
             blockMargin={4}
+            blockRadius={3}
             fontSize={12}
             theme={{
-              light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-              dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+              light: ['#e7e5de', '#fdc9a8', '#f99a63', '#f0560f', '#b83d05'],
+              dark: ['#1f1f1d', '#4a2414', '#8a3a15', '#d85a1c', '#ff7638'],
             }}
           />
         </div>
-
-      </div>
-    </section>
+      </Reveal>
+    </Section>
   );
 }

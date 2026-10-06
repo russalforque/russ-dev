@@ -1,108 +1,117 @@
-import { Copy, Check, ArrowUpRight, MapPin } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Copy, Check, ArrowUpRight, ArrowUp } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
+import Reveal from './ui/Reveal';
 
 interface ContactSectionProps {
   onCopyEmail: () => void;
   copied: boolean;
 }
 
+const SOCIALS = [
+  { label: 'GitHub', href: portfolioData.github },
+  { label: 'LinkedIn', href: portfolioData.linkedin },
+  { label: 'Facebook', href: portfolioData.facebook },
+  { label: 'Instagram', href: portfolioData.instagram },
+];
+
 export default function ContactSection({ onCopyEmail, copied }: ContactSectionProps) {
+  const [year] = useState(() => new Date().getFullYear());
+  const [time, setTime] = useState('');
+
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Manila', hour: 'numeric', minute: '2-digit' });
+    const update = () => setTime(fmt.format(new Date()));
+    update();
+    const id = setInterval(update, 15000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <section 
-      id="contact" 
-      aria-label="Contact"
-      className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full border-t border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100"
-    >
-      <div className="space-y-6">
-        
-        {/* Title */}
-        <div className="space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-mono lowercase tracking-tight text-neutral-950 dark:text-white">
-            contact
-          </h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
-            Have a question or want to work together? Email me directly:
-          </p>
-        </div>
+    <section id="contact" aria-labelledby="contact-title" className="relative isolate overflow-hidden border-t border-line">
+      <div className="bg-grid pointer-events-none absolute inset-0 -z-10 rotate-180 opacity-60" aria-hidden="true" />
 
-        {/* Email & Actions */}
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Direct Email Link */}
-          <a
-            href={`mailto:${portfolioData.email}`}
-            onClick={() => soundManager.playTick(1000)}
-            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-mono font-medium rounded-md bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 hover:opacity-90 transition-opacity"
-          >
-            <span>{portfolioData.email}</span>
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </a>
-
-          {/* Copy Button */}
-          <button
-            type="button"
-            onClick={() => {
-              onCopyEmail();
-              soundManager.playSuccess();
-            }}
-            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-mono rounded-md border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors cursor-pointer"
-          >
-            {copied ? (
-              <>
-                <Check className="h-3.5 w-3.5 text-emerald-500" />
-                <span>Copied!</span>
-              </>
-            ) : (
-              <>
-                <Copy className="h-3.5 w-3.5 text-neutral-400" />
-                <span>Copy</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Social Links */}
-        <div className="flex items-center gap-4 pt-2 text-xs font-mono text-neutral-500 dark:text-neutral-400">
-          <a
-            href={portfolioData.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => soundManager.playTick(1000)}
-            className="hover:text-neutral-950 dark:hover:text-white underline underline-offset-4 transition-colors"
-          >
-            GitHub
-          </a>
-          <span>/</span>
-          <a
-            href={portfolioData.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => soundManager.playTick(1000)}
-            className="hover:text-neutral-950 dark:hover:text-white underline underline-offset-4 transition-colors"
-          >
-            LinkedIn
-          </a>
-        </div>
-
-        {/* Footer */}
-        <footer className="pt-10 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between text-xs font-mono text-neutral-400">
-          <div className="flex items-center gap-1.5">
-            <MapPin className="h-3 w-3" />
-            <span>Cebu City, PH</span>
+      <div className="container-page pb-10 pt-24 sm:pt-32">
+        <Reveal>
+          <div className="eyebrow flex items-center gap-3">
+            <span className="text-accent">07</span>
+            <span className="h-px w-8 bg-line-strong" aria-hidden="true" />
+            <span>Contact</span>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              soundManager.playTick(1200);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="hover:text-neutral-950 dark:hover:text-white transition-colors cursor-pointer"
+          <h2
+            id="contact-title"
+            className="mt-8 max-w-4xl text-balance text-[clamp(2.5rem,7vw,5.5rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-fg"
           >
-            Back to top ↑
-          </button>
-        </footer>
+            Let's build something{' '}
+            <span className="font-serif font-normal italic tracking-[-0.02em] text-accent">useful</span>.
+          </h2>
 
+          <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted sm:text-lg">
+            Hiring for a junior .NET or full-stack role, or have a project in mind? My inbox is open — I usually reply
+            within a day.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <a
+              href={`mailto:${portfolioData.email}`}
+              onClick={() => soundManager.playTick(1000)}
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-on-accent transition-transform hover:-translate-y-0.5 sm:text-base"
+            >
+              {portfolioData.email}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+            <button
+              type="button"
+              onClick={() => {
+                onCopyEmail();
+                soundManager.playSuccess();
+              }}
+              className="inline-flex h-12 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-surface px-5 text-sm font-medium text-fg transition-colors hover:border-fg"
+              aria-live="polite"
+            >
+              {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-muted" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <ul className="mt-20 grid grid-cols-2 border-t border-line sm:grid-cols-4">
+            {SOCIALS.map((s) => (
+              <li key={s.label} className="border-b border-line sm:border-b-0 odd:border-r sm:border-r sm:last:border-r-0">
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => soundManager.playTick(1000)}
+                  className="group flex items-center justify-between px-1 py-5 text-sm font-medium text-fg transition-colors hover:text-accent sm:px-4"
+                >
+                  {s.label}
+                  <ArrowUpRight className="h-4 w-4 text-faint transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
+        <footer className="mt-16 flex flex-col gap-4 border-t border-line pt-8 font-mono text-[11px] text-muted sm:flex-row sm:items-center sm:justify-between">
+          <span>© {year} Rhazel Alforque · Built with React, Tailwind & Motion</span>
+          <div className="flex items-center gap-5">
+            <span>Cebu · {time}</span>
+            <button
+              type="button"
+              onClick={() => {
+                soundManager.playTick(1200);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="inline-flex cursor-pointer items-center gap-1 transition-colors hover:text-fg"
+            >
+              Back to top <ArrowUp className="h-3 w-3" />
+            </button>
+          </div>
+        </footer>
       </div>
     </section>
   );

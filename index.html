@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- Tab Icon (Favicon) -->
     <link rel="icon" type="image/jpeg" href="/assets/profile.jpg" />
@@ -13,18 +13,40 @@
     <meta name="title" content="Rhazel Alforque | Full Stack Developer" />
     <meta
       name="description"
-      content="Full-stack developer who enjoys turning real-world problems into practical solutions."
+      content="Full-stack developer in Cebu City building practical software with C#, ASP.NET Core, React, and SQL."
     />
+    <meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0c0c0b" media="(prefers-color-scheme: dark)" />
 
-    <!-- Fonts (Optional / Recommended) -->
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rhazel Alforque | Full Stack Developer" />
+    <meta
+      property="og:description"
+      content="Full-stack developer in Cebu City building practical software with C#, ASP.NET Core, React, and SQL."
+    />
+    <meta property="og:image" content="/assets/profile.jpg" />
+
+    <!-- Apply saved / OS theme before first paint to avoid a flash -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('rhazel_theme');
+          var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100 min-h-screen">
+  <body class="min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

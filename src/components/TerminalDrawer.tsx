@@ -71,7 +71,9 @@ export default function TerminalDrawer({
   ]);
 
   useEffect(() => {
-    if (isOpen) {
+    // Skip autofocus on touch devices so the on-screen keyboard doesn't cover
+    // the output and quick-action chips the moment the drawer opens.
+    if (isOpen && !window.matchMedia('(pointer: coarse)').matches) {
       setTimeout(() => inputRef.current?.focus(), 60);
     }
   }, [isOpen]);
@@ -256,7 +258,7 @@ export default function TerminalDrawer({
         newEntries.push({
           id: `out-${Date.now()}`,
           type: 'success',
-          text: '✓ Opened resume viewer.',
+          text: '✓ Opened resume PDF in a new tab.',
         });
         break;
 
@@ -321,7 +323,7 @@ export default function TerminalDrawer({
       className={`fixed z-50 transition-all duration-150 ease-out flex flex-col font-mono text-xs border-2 border-neutral-800 bg-neutral-950 text-neutral-200 shadow-xl ${
         isMaximized
           ? 'inset-2 sm:inset-6'
-          : 'bottom-0 right-0 sm:bottom-4 sm:right-4 w-full sm:w-[500px] h-[400px] max-h-[85vh]'
+          : 'bottom-0 right-0 sm:bottom-4 sm:right-4 w-full sm:w-[500px] h-[min(400px,70dvh)] sm:h-[400px] max-h-[85dvh]'
       }`}
     >
       {/* Title Bar */}
@@ -336,22 +338,25 @@ export default function TerminalDrawer({
           <button
             type="button"
             onClick={() => setHistory([])}
-            className="p-1 text-neutral-400 hover:text-white"
+            className="p-2 sm:p-1 text-neutral-400 hover:text-white"
             title="Clear"
+            aria-label="Clear terminal"
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
           <button
             type="button"
             onClick={() => setIsMaximized(!isMaximized)}
-            className="p-1 text-neutral-400 hover:text-white"
+            className="p-2 sm:p-1 text-neutral-400 hover:text-white"
+            aria-label={isMaximized ? 'Restore terminal size' : 'Maximize terminal'}
           >
             {isMaximized ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 text-neutral-400 hover:text-rose-400"
+            className="p-2 sm:p-1 text-neutral-400 hover:text-rose-400"
+            aria-label="Close terminal"
           >
             <X className="h-3.5 w-3.5" />
           </button>
@@ -385,7 +390,7 @@ export default function TerminalDrawer({
             key={action}
             type="button"
             onClick={() => handleCommand(action)}
-            className={`px-2 py-0.5 border text-nowrap transition-colors ${
+            className={`px-2.5 py-1.5 sm:px-2 sm:py-0.5 border text-nowrap transition-colors ${
               action === 'hire'
                 ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-neutral-950 font-bold'
                 : 'border-neutral-800 bg-neutral-900 text-neutral-300 hover:border-neutral-600'
@@ -397,7 +402,8 @@ export default function TerminalDrawer({
       </div>
 
       {/* Input Prompt */}
-      <div className="border-t border-neutral-800 px-3 py-2 bg-neutral-900 flex items-center gap-2">
+      <div className="pb-safe border-t border-neutral-800 bg-neutral-900">
+      <div className="px-3 py-2 flex items-center gap-2">
         <span className="text-emerald-400 font-bold select-none">❯</span>
         <input
           ref={inputRef}
@@ -406,7 +412,7 @@ export default function TerminalDrawer({
           onChange={(e) => setInputVal(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="type 'hire', 'projects', 'resume'..."
-          className="w-full bg-transparent text-white focus:outline-none font-mono text-xs placeholder:text-neutral-600"
+          className="w-full bg-transparent text-white focus:outline-none font-mono text-base sm:text-xs placeholder:text-neutral-600"
           autoComplete="off"
           spellCheck="false"
         />
@@ -415,6 +421,7 @@ export default function TerminalDrawer({
             <Check className="w-3 h-3" /> Copied
           </span>
         )}
+      </div>
       </div>
     </div>
   );

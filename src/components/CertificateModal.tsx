@@ -75,7 +75,7 @@ export default function CertificateModal({ certificate, onClose }: CertificateMo
     >
       <div
         id="certificate-modal-card"
-        className="relative max-w-5xl max-h-[90vh] flex flex-col items-center justify-center"
+        className="relative max-w-5xl max-h-[90dvh] flex flex-col items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -86,7 +86,7 @@ export default function CertificateModal({ certificate, onClose }: CertificateMo
             soundManager.playTick(800);
             onClose();
           }}
-          className="absolute -top-11 right-0 p-2 rounded-full bg-neutral-900/80 text-neutral-300 hover:text-white border border-neutral-700 transition-colors cursor-pointer"
+          className="fixed right-[max(1rem,env(safe-area-inset-right))] top-[max(1rem,env(safe-area-inset-top))] z-10 p-2.5 rounded-full bg-neutral-900/80 text-neutral-300 hover:text-white border border-neutral-700 transition-colors cursor-pointer"
           aria-label="Close image modal"
         >
           <X className="h-5 w-5" />
@@ -97,7 +97,7 @@ export default function CertificateModal({ certificate, onClose }: CertificateMo
           <img
             src={imageUrl}
             alt={certificate.title || 'Certificate'}
-            className="max-h-[85vh] max-w-full w-auto h-auto object-contain rounded-xl shadow-2xl border border-neutral-800 bg-neutral-950"
+            className="max-h-[calc(100dvh-7rem)] sm:max-h-[85dvh] max-w-full w-auto h-auto object-contain rounded-xl shadow-2xl border border-neutral-800 bg-neutral-950"
           />
         ) : (
           <div className="p-8 text-neutral-400 bg-neutral-900 rounded-xl border border-neutral-800">

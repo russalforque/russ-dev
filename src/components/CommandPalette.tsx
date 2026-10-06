@@ -283,7 +283,7 @@ export default function CommandPalette({
   return (
     <div 
       id="command-palette-backdrop"
-      className="fixed inset-0 z-50 flex items-start justify-center pt-20 sm:pt-28 px-4 bg-neutral-950/70 backdrop-blur-xs transition-opacity duration-150 selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-[max(4rem,env(safe-area-inset-top))] sm:pt-28 px-4 bg-neutral-950/70 backdrop-blur-xs transition-opacity duration-150 selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950"
       onClick={() => {
         soundManager.playTick(800);
         onClose();
@@ -307,7 +307,7 @@ export default function CommandPalette({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Type a command or search anything..."
-            className="w-full bg-transparent text-sm font-mono text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 outline-none"
+            className="w-full bg-transparent text-base sm:text-sm font-mono text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 outline-none"
           />
           <kbd className="hidden sm:inline-block rounded-md border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 px-1.5 py-0.5 text-[10px] font-mono font-medium text-neutral-500">
             ESC
@@ -317,7 +317,7 @@ export default function CommandPalette({
         {/* Results List */}
         <div
           ref={listRef}
-          className="max-h-80 overflow-y-auto p-2 divide-y divide-transparent"
+          className="max-h-[min(20rem,60dvh)] overflow-y-auto overscroll-contain p-2 divide-y divide-transparent"
         >
           {filteredItems.length === 0 ? (
             <div className="py-8 text-center text-xs text-neutral-400 font-mono">
@@ -333,7 +333,7 @@ export default function CommandPalette({
                   id={`palette-item-${item.id}`}
                   onClick={item.action}
                   onMouseEnter={() => setSelectedIndex(index)}
-                  className={`w-full flex items-center justify-between rounded-xl px-3 py-2.5 text-left text-xs sm:text-sm font-mono transition-colors cursor-pointer ${
+                  className={`w-full flex min-h-11 items-center justify-between rounded-xl px-3 py-2.5 text-left text-xs sm:text-sm font-mono transition-colors cursor-pointer ${
                     isSelected
                       ? 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-950 dark:text-white font-medium'
                       : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-900'
@@ -347,11 +347,11 @@ export default function CommandPalette({
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 uppercase">
+                    <span className="hidden sm:inline text-[10px] font-mono text-neutral-400 dark:text-neutral-500 uppercase">
                       {item.category}
                     </span>
                     {item.shortcut && (
-                      <kbd className="inline-flex h-5 items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-1.5 text-[10px] font-mono text-neutral-600 dark:text-neutral-400">
+                      <kbd className="hidden sm:inline-flex h-5 items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-1.5 text-[10px] font-mono text-neutral-600 dark:text-neutral-400">
                         {item.shortcut}
                       </kbd>
                     )}
@@ -365,7 +365,7 @@ export default function CommandPalette({
 
         {/* Footer shortcuts helper */}
         <div className="border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40 px-4 py-2 flex items-center justify-between text-[11px] text-neutral-400 dark:text-neutral-500 font-mono">
-          <div className="flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-2">
             <span>Navigate ↑↓</span>
             <span>·</span>
             <span>Select ↵</span>
