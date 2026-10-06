@@ -61,42 +61,27 @@ export default function Hero({ onCopyEmail, copied }: HeroProps) {
         animate="show"
         transition={{ staggerChildren: 0.08 }}
       >
-        {/* Status row */}
+        {/* Identity row */}
         <motion.div
           variants={fadeUp}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center gap-x-5 gap-y-3"
+          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-line pb-5"
         >
-          <span
-            role="status"
-            className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-medium text-fg shadow-[0_1px_0_rgba(0,0,0,0.03)]"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            Open to Junior .NET &amp; Full-Stack roles
-          </span>
+          <h1 className="font-mono text-sm text-fg">
+            Rhazel Alforque <span className="text-faint">—</span> <span className="text-muted">Full Stack Developer</span>
+          </h1>
           <span className="font-mono text-xs text-muted">
             {portfolioData.location} · {cebuTime || '--:--'} UTC+8
           </span>
         </motion.div>
 
-        <div className="mt-12 grid grid-cols-1 items-end gap-12 lg:mt-16 lg:grid-cols-12">
+        <div className="mt-10 grid grid-cols-1 items-end gap-12 lg:mt-14 lg:grid-cols-12">
           {/* Statement */}
           <div className="lg:col-span-8">
-            <motion.h1
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-mono text-sm text-muted"
-            >
-              Rhazel Alforque <span className="text-faint">—</span> Full Stack Developer
-            </motion.h1>
-
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-5 text-balance text-[clamp(2.5rem,6.6vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-fg"
+              className="text-balance text-[clamp(2.5rem,6.6vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-fg"
             >
               I turn rough ideas into{' '}
               <span className="font-serif font-normal italic tracking-[-0.02em] text-accent">software</span>{' '}
