@@ -51,7 +51,7 @@ function AppCard({ app }: { app: AppItem }) {
                 onClick={() => soundManager.playTick(1000)}
                 className="inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 text-sm font-medium text-fg transition-colors hover:border-fg"
               >
-                Get Pro
+                Website
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             )}
@@ -90,8 +90,10 @@ function AppCard({ app }: { app: AppItem }) {
             ))}
           </ul>
 
+          {app.plans && app.plans.length > 0 && (
+            <>
           <h4 className="eyebrow mt-8">Pricing</h4>
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className={`mt-4 grid gap-3 ${app.plans.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
             {app.plans.map((plan) => (
               <div key={plan.name} className="rounded-xl border border-line bg-surface p-4">
                 <div className="flex items-baseline justify-between gap-2">
@@ -102,6 +104,8 @@ function AppCard({ app }: { app: AppItem }) {
               </div>
             ))}
           </div>
+            </>
+          )}
 
           <div className="mt-8 flex flex-wrap items-center gap-2">
             {app.stack.map((t) => (

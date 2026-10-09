@@ -16,12 +16,13 @@ export interface AppItem {
   requirements: string;
   /** Direct download for the installer (hosted on GitHub Releases) */
   downloadUrl: string;
-  /** Official app website: Pro upgrade, install guide, license recovery */
+  /** Official app website */
   websiteUrl?: string;
   installGuideUrl?: string;
   sourceUrl?: string;
   features: string[];
-  plans: AppPlan[];
+  /** Optional pricing; omit to hide the pricing block */
+  plans?: AppPlan[];
   stack: string[];
 }
 
@@ -31,7 +32,7 @@ export const apps: AppItem[] = [
     name: 'Studex',
     tagline: 'A calm, offline-first companion for students',
     description:
-      'Classes, tasks, exams, allowance, expenses and savings in one app. Everything is stored on your phone, with no account needed and no internet after a one-time Pro activation.',
+      'Classes, tasks, exams, allowance, expenses and savings in one app. Everything is stored on your phone, with no account and no internet needed.',
     icon: '/assets/apps/studex.png',
     platform: 'Android',
     version: '0.3.0',
@@ -48,10 +49,6 @@ export const apps: AppItem[] = [
       'Reminders, search and a weekly summary',
       'Backup, restore and CSV export',
       'Offline-first: your data stays on your device',
-    ],
-    plans: [
-      { name: 'Free', price: '₱0', note: 'Core planner, budget, backup and app lock' },
-      { name: 'Pro', price: '₱199', note: 'One-time upgrade: files, grades, focus and savings goals' },
     ],
     stack: ['React', 'TypeScript', 'Tailwind CSS', 'Capacitor', 'SQLite'],
   },
