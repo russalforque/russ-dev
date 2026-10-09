@@ -35,7 +35,7 @@ export default function ContactSection({ onCopyEmail, copied }: ContactSectionPr
       <div className="container-page pb-10 pt-24 sm:pt-32">
         <Reveal>
           <div className="eyebrow flex items-center gap-3">
-            <span className="text-accent">07</span>
+            <span className="text-accent">08</span>
             <span className="h-px w-8 bg-line-strong" aria-hidden="true" />
             <span>Contact</span>
           </div>

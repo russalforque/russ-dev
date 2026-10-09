@@ -6,7 +6,7 @@ export default function ExperienceTimeline() {
   return (
     <Section
       id="experience"
-      index="02"
+      index="03"
       label="Experience"
       title={
         <>

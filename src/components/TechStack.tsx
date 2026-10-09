@@ -16,7 +16,7 @@ export default function TechStack({ selectedTech, onSelectTech, projects }: Tech
   return (
     <Section
       id="stack"
-      index="03"
+      index="04"
       label="Stack"
       title={
         <>

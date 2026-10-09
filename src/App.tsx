@@ -4,6 +4,7 @@ import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import ProjectList from './components/ProjectList';
 import ProjectModal from './components/ProjectModal';
+import AppShop from './components/AppShop';
 import ExperienceTimeline from './components/ExperienceTimeline';
 import TechStack from './components/TechStack';
 import GitHubActivity from './components/GitHubActivity';
@@ -143,7 +144,7 @@ export default function App() {
 
   // Section Observer for active scroll state
   useEffect(() => {
-    const sections = ['projects', 'experience', 'stack', 'about', 'certifications', 'contact'];
+    const sections = ['projects', 'shop', 'experience', 'stack', 'about', 'certifications', 'contact'];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -203,7 +204,10 @@ export default function App() {
           onClearTechFilter={() => setSelectedTechFilter(null)}
         />
 
-        {/* 02 Experience Timeline */}
+        {/* 02 App Shop */}
+        <AppShop />
+
+        {/* 03 Experience Timeline */}
         <ExperienceTimeline />
 
         {/* 03 Technology Stack */}

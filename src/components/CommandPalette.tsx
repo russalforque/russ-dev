@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { 
   FolderGit2, 
+  ShoppingBag,
   Briefcase, 
   Layers, 
   User, 
@@ -73,6 +74,17 @@ export default function CommandPalette({
       action: () => {
         soundManager.playTick(1000);
         onNavigate('projects');
+        onClose();
+      },
+    },
+    {
+      id: 'shop',
+      label: 'Shop: download my apps',
+      category: 'Navigation',
+      icon: ShoppingBag,
+      action: () => {
+        soundManager.playTick(1000);
+        onNavigate('shop');
         onClose();
       },
     },

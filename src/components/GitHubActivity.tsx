@@ -31,7 +31,7 @@ export default function GitHubActivity({ darkMode }: GitHubActivityProps) {
   return (
     <Section
       id="github-activity"
-      index="04"
+      index="05"
       label="Activity"
       title={
         <>

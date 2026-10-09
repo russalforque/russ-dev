@@ -15,6 +15,7 @@ interface NavigationProps {
 
 export const NAV_LINKS = [
   { id: 'projects', label: 'Work' },
+  { id: 'shop', label: 'Shop' },
   { id: 'experience', label: 'Experience' },
   { id: 'stack', label: 'Stack' },
   { id: 'about', label: 'About' },

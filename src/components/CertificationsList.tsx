@@ -26,7 +26,7 @@ export default function CertificationsList({ onSelectCertificate }: Certificatio
   return (
     <Section
       id="certifications"
-      index="06"
+      index="07"
       label="Credentials"
       title={
         <>
