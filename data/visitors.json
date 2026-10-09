@@ -1,5 +1,5 @@
 {
-  "totalPageViews": 3268,
+  "totalPageViews": 3621,
   "visitors": [
     {
       "id": "v-wr3edxx-v6ul",
@@ -11,9 +11,9 @@
       "flag": "🇵🇭",
       "device": "Windows · Chrome",
       "currentSection": "projects",
-      "pageViews": 3,
-      "firstSeen": 1790302281407,
-      "lastSeen": 1790302296381
+      "pageViews": 7,
+      "firstSeen": 1791522249772,
+      "lastSeen": 1791522297347
     },
     {
       "id": "v-xvtrvqg-isqy",
@@ -39,11 +39,11 @@
       "countryCode": "PH",
       "flag": "🇵🇭",
       "device": "Windows · Chrome",
-      "currentSection": "projects",
+      "currentSection": "shop",
       "currentUrl": "/",
-      "pageViews": 1,
-      "firstSeen": 1789262598374,
-      "lastSeen": 1789262598374
+      "pageViews": 66,
+      "firstSeen": 1791521530800,
+      "lastSeen": 1791522286721
     },
     {
       "id": "v-e3yb7sw-a6je",
@@ -220,5 +220,5 @@
       "lastSeen": 1788698490257
     }
   ],
-  "updatedAt": "2026-09-25T02:11:38.386Z"
+  "updatedAt": "2026-10-09T05:04:59.353Z"
 }
