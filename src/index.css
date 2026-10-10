@@ -4,36 +4,44 @@
 
 /* ------------------------------------------------------------------
    Design tokens
-   Semantic colors live as CSS variables so light/dark swap in one
-   place; @theme inline exposes them as Tailwind utilities
-   (bg-bg, text-fg, border-line, text-accent, ...).
+
+   The page is laid out like a printed résumé that a recruiter has
+   already gone over with a highlighter: white paper, black ink, links
+   in ballpoint blue, and one yellow marker for the things a recruiter
+   screens for. Semantic colors are CSS variables so light and dark
+   swap in one place; @theme inline exposes them as Tailwind utilities
+   (bg-bg, text-fg, border-line, text-accent, bg-mark, ...).
 ------------------------------------------------------------------- */
 :root {
-  --bg: #f5f4ef;
+  --bg: #ffffff;
   --surface: #ffffff;
-  --surface-2: #ecebe5;
-  --line: #e0ded6;
-  --line-strong: #cbc9bf;
-  --fg: #121211;
-  --muted: #64635d;
-  --faint: #9c9b94;
-  --accent: #f0560f;
-  --accent-soft: rgba(240, 86, 15, 0.1);
+  --surface-2: #f2f3f5;
+  --line: #d8dbe0;
+  --line-strong: #9aa0a9;
+  --fg: #000000;
+  --muted: #4d535b;
+  --faint: #767c85;
+  --accent: #1a3fcf;
+  --accent-soft: rgba(26, 63, 207, 0.08);
   --on-accent: #ffffff;
+  --mark: #ffe94a;
+  --on-mark: #000000;
 }
 
 .dark {
-  --bg: #0c0c0b;
-  --surface: #141413;
-  --surface-2: #1c1c1a;
-  --line: #262624;
-  --line-strong: #3a3a37;
-  --fg: #ecebe6;
-  --muted: #9b9a93;
-  --faint: #5f5e59;
-  --accent: #ff7638;
-  --accent-soft: rgba(255, 118, 56, 0.12);
-  --on-accent: #0c0c0b;
+  --bg: #0e1013;
+  --surface: #15181c;
+  --surface-2: #1c2026;
+  --line: #2b3038;
+  --line-strong: #59616c;
+  --fg: #f4f5f6;
+  --muted: #aab0b9;
+  --faint: #858c96;
+  --accent: #9fb2ff;
+  --accent-soft: rgba(159, 178, 255, 0.12);
+  --on-accent: #0e1013;
+  --mark: #ffe94a;
+  --on-mark: #000000;
 }
 
 @theme inline {
@@ -48,15 +56,17 @@
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
+  --color-mark: var(--mark);
+  --color-on-mark: var(--on-mark);
 
-  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Libre Franklin', 'Franklin Gothic Medium', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
 }
 
 @layer base {
   html {
     color-scheme: light;
+    scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -76,43 +86,81 @@
     /* Guard against stray horizontal overflow on small screens. `clip`
        (unlike `hidden`) doesn't create a scroll container, so sticky works. */
     overflow-x: clip;
-    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   ::selection {
-    background: var(--accent);
-    color: var(--on-accent);
+    background: var(--mark);
+    color: var(--on-mark);
   }
 
-  code, kbd, samp, pre {
+  code,
+  kbd,
+  samp,
+  pre {
     font-family: var(--font-mono);
   }
 
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 2px;
+  }
+
+  /* The highlighter. Marks the facts a recruiter screens for. */
+  mark {
+    background: var(--mark);
+    color: var(--on-mark);
+    padding: 0.08em 0.22em;
+    margin: 0 -0.06em;
+    border-radius: 2px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 }
 
 @layer components {
   /* Shared page container */
   .container-page {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
 
-  /* Small mono uppercase label used across sections */
-  .eyebrow {
-    @apply font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted;
+  /* Text links: ballpoint blue, always underlined so they read as links */
+  .link {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
   }
 
-  /* Subtle paper grain / grid backdrop for the hero */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, var(--line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+  /* Buttons. Square-ish corners keep the printed-document feel. */
+  .btn {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-[4px] border px-4 text-[15px] font-semibold leading-none transition-colors;
+  }
+  .btn-primary {
+    border-color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .btn-primary:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .btn-secondary {
+    border-color: var(--line-strong);
+    background: transparent;
+    color: var(--fg);
+  }
+  .btn-secondary:hover {
+    border-color: var(--fg);
+  }
+
+  /* Small technology tag */
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded-[3px] border border-line px-2 py-1 text-[13px] leading-none text-muted;
   }
 }
 
@@ -139,6 +187,21 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* A recruiter may well print this page. */
+@media print {
+  header,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  section {
+    break-inside: avoid;
   }
 }
 

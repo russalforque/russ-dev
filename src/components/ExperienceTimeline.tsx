@@ -1,55 +1,68 @@
 import { portfolioData } from '../data/portfolioData';
-import Section, { Em } from './ui/Section';
-import Reveal from './ui/Reveal';
+import Section from './ui/Section';
+
+function Entry({
+  period,
+  title,
+  place,
+  points,
+}: {
+  period: string;
+  title: string;
+  place: string;
+  points: string[];
+}) {
+  return (
+    <li className="grid grid-cols-1 gap-x-8 gap-y-2 border-t border-line py-7 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[11rem_minmax(0,1fr)]">
+      <p className="pt-1 text-sm tabular-nums text-muted">{period}</p>
+      <div>
+        <h3 className="text-xl font-extrabold leading-snug tracking-[-0.015em] text-fg">{title}</h3>
+        <p className="mt-1 text-[15px] text-fg">{place}</p>
+        {points.length > 0 && (
+          <ul className="mt-4 max-w-2xl space-y-2">
+            {points.map((point) => (
+              <li key={point} className="flex gap-3 text-[15px] leading-relaxed text-muted">
+                <span className="mt-[0.7em] h-px w-3 shrink-0 bg-line-strong" aria-hidden="true" />
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </li>
+  );
+}
 
 export default function ExperienceTimeline() {
   return (
-    <Section
-      id="experience"
-      index="03"
-      label="Experience"
-      title={
-        <>
-          Where I've <Em>worked</Em>
-        </>
-      }
-      intro="From shipping full-stack features as an intern to enterprise cloud and DevOps training — each role sharpened how I build and support software."
-    >
-      <ol className="border-t border-line">
-        {portfolioData.experience.map((exp, i) => (
-          <li key={`${exp.organization}-${exp.year}`} className="border-b border-line">
-            <Reveal delay={i * 0.05}>
-              <div className="grid grid-cols-1 gap-4 py-9 sm:grid-cols-12 sm:gap-8">
-                <div className="sm:col-span-3">
-                  <div className="font-mono text-sm text-fg">{exp.year}</div>
-                  <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-                    {exp.roleType}
-                  </div>
-                </div>
+    <Section id="experience" title="Experience">
+      <ol>
+        {portfolioData.experience.map((exp) => (
+          <Entry
+            key={`${exp.organization}-${exp.period}`}
+            period={exp.period}
+            title={exp.title}
+            place={`${exp.organization}, ${exp.location}`}
+            points={exp.keyPoints}
+          />
+        ))}
+      </ol>
+    </Section>
+  );
+}
 
-                <div className="sm:col-span-9">
-                  <h3 className="text-xl font-semibold tracking-[-0.02em] text-fg sm:text-2xl">{exp.title}</h3>
-                  <p className="mt-1.5 text-sm text-muted">
-                    <span className="font-medium text-fg">{exp.organization}</span>
-                    <span className="mx-2 text-faint">·</span>
-                    {exp.location}
-                  </p>
-                  <p className="mt-5 max-w-2xl text-pretty text-[15px] leading-relaxed text-fg/80">{exp.description}</p>
-
-                  {exp.keyPoints.length > 0 && (
-                    <ul className="mt-5 space-y-2.5">
-                      {exp.keyPoints.map((point) => (
-                        <li key={point} className="flex gap-3 text-sm leading-relaxed text-muted">
-                          <span className="mt-[0.6rem] h-px w-3 shrink-0 bg-accent" aria-hidden="true" />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            </Reveal>
-          </li>
+export function Education() {
+  return (
+    <Section id="education" title="Education">
+      <ol>
+        {portfolioData.education.map((edu) => (
+          <Entry
+            key={edu.degree}
+            period={edu.period}
+            title={edu.degree}
+            place={`${edu.school}, ${edu.location}`}
+            points={edu.notes}
+          />
         ))}
       </ol>
     </Section>
