@@ -1,199 +1,118 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { ArrowUpRight, Copy, Check, FileText, Github, Linkedin } from 'lucide-react';
+import { FileText, Github, Linkedin, Mail } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
 import { RESUME_URL } from '../utils/resume';
-import { ActiveViewer } from '../utils/presence';
 
-interface HeroProps {
-  onCopyEmail: () => void;
-  copied: boolean;
-  onOpenTerminal: () => void;
-  onlineCount: number;
-  activeViewers: ActiveViewer[];
-  onOpenVisitorsModal: () => void;
-}
-
-/** Live HH:MM clock for Cebu (Asia/Manila, UTC+8) */
-function useCebuTime() {
-  const [time, setTime] = useState('');
-  useEffect(() => {
-    const formatter = new Intl.DateTimeFormat('en-GB', {
-      timeZone: 'Asia/Manila',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-    const update = () => setTime(formatter.format(new Date()));
-    update();
-    const interval = setInterval(update, 1000 * 15);
-    return () => clearInterval(interval);
-  }, []);
-  return time;
-}
-
-const firstYear = Math.min(...portfolioData.experience.map((e) => Number(e.year)).filter(Boolean));
-
-const STATS = [
-  { value: String(portfolioData.projects.length).padStart(2, '0'), label: 'Projects shipped' },
-  { value: String(portfolioData.certifications.length).padStart(2, '0'), label: 'Cloud & DevOps certs' },
-  { value: `${firstYear}`, label: 'Building since' },
-  { value: '.NET + React', label: 'Core stack' },
+/**
+ * What a recruiter needs in the first screen: who this is, what role they
+ * want, what they build with, and how to get the résumé or get in touch.
+ * The yellow marks sit on the keywords a screener would highlight.
+ */
+const FACTS = [
+  {
+    label: 'Looking for',
+    value: <mark>{portfolioData.lookingFor}</mark>,
+    detail: portfolioData.workSetup,
+  },
+  {
+    label: 'Based in',
+    value: portfolioData.location,
+    detail: portfolioData.timezone,
+  },
+  {
+    label: 'Education',
+    value: 'BS Information Technology',
+    detail: `${portfolioData.education[0].school}, ${portfolioData.education[0].period}`,
+  },
+  {
+    label: 'Experience',
+    value: 'Accenture, 2026',
+    detail: 'Web developer internship, 2024',
+  },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
-
-export default function Hero({ onCopyEmail, copied }: HeroProps) {
-  const cebuTime = useCebuTime();
-  const [imgSrc, setImgSrc] = useState('/assets/profile.jpg');
-
+export default function Hero() {
   return (
-    <section id="hero-section" aria-label="Introduction" className="relative isolate overflow-hidden">
-      <div className="bg-grid pointer-events-none absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
+    <section id="top" aria-label="Introduction">
+      <div className="container-page pt-8 sm:pt-14">
+        <div className="grid grid-cols-1 gap-x-12 gap-y-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+          <div className="min-w-0">
+            <h1 className="text-[clamp(3rem,10vw,6.75rem)] font-extrabold leading-[0.9] tracking-[-0.045em] text-fg">
+              Rhazel
+              <br />
+              Alforque
+            </h1>
+            <p className="mt-5 text-lg font-semibold text-fg sm:text-xl">
+              {portfolioData.role} in {portfolioData.location}
+            </p>
 
-      <motion.div
-        className="container-page pb-16 pt-12 sm:pb-24 sm:pt-20"
-        initial="hidden"
-        animate="show"
-        transition={{ staggerChildren: 0.08 }}
-      >
-        {/* Identity row */}
-        <motion.div
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-line pb-5"
-        >
-          <h1 className="font-mono text-sm text-fg">
-            Rhazel Alforque <span className="text-faint">—</span> <span className="text-muted">Full Stack Developer</span>
-          </h1>
-          <span className="font-mono text-xs text-muted">
-            {portfolioData.location} · {cebuTime || '--:--'} UTC+8
-          </span>
-        </motion.div>
+            <p className="mt-5 max-w-[40rem] text-pretty text-lg leading-[1.55] text-muted sm:text-xl">
+              I build business software for small shops and teams: a point of sale, a laundry system, online booking
+              and a timesheet tracker. Back ends in <mark className="sm:whitespace-nowrap">C# and ASP.NET Core</mark> with{' '}
+              <mark className="whitespace-nowrap">SQL Server</mark>, front ends in{' '}
+              <mark className="sm:whitespace-nowrap">React and TypeScript</mark>.
+            </p>
 
-        <div className="mt-10 grid grid-cols-1 items-end gap-12 lg:mt-14 lg:grid-cols-12">
-          {/* Statement */}
-          <div className="lg:col-span-8">
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-balance text-[clamp(2.5rem,6.6vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-fg"
-            >
-              I turn rough ideas into{' '}
-              <span className="font-serif font-normal italic tracking-[-0.02em] text-accent">software</span>{' '}
-              people actually use.
-            </motion.p>
-
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-7 max-w-xl text-pretty text-base leading-relaxed text-muted sm:text-lg"
-            >
-              Full-stack developer working across C#, ASP.NET Core, React and SQL — building clean,
-              practical applications for real business problems, from booking systems to offline-first
-              point of sale.
-            </motion.p>
-
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-9 flex flex-wrap items-center gap-3"
-            >
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => soundManager.playTick(1000)}
-                className="group inline-flex h-11 items-center gap-2 rounded-full bg-fg px-5 text-sm font-medium text-bg transition-transform hover:-translate-y-0.5"
+                className="btn btn-primary"
               >
-                <FileText className="h-4 w-4" />
-                View résumé
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <FileText className="h-4 w-4" aria-hidden="true" />
+                View résumé (PDF)
               </a>
-
-              <button
-                type="button"
-                onClick={() => {
-                  soundManager.playSuccess();
-                  onCopyEmail();
-                }}
-                className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-surface px-5 text-sm font-medium text-fg transition-colors hover:border-fg"
-                aria-live="polite"
+              <a
+                href={`mailto:${portfolioData.email}`}
+                onClick={() => soundManager.playTick(1000)}
+                className="btn btn-secondary"
               >
-                {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-muted" />}
-                {copied ? 'Email copied' : 'Copy email'}
-              </button>
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                {portfolioData.email}
+              </a>
+            </div>
 
-              <div className="ml-1 flex items-center gap-1">
-                <a
-                  href={portfolioData.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => soundManager.playTick(1000)}
-                  aria-label="GitHub profile"
-                  className="flex h-11 w-11 items-center justify-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-fg"
-                >
-                  <Github className="h-4.5 w-4.5" />
+            <ul className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-[15px]">
+              <li>
+                <a href={portfolioData.github} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1.5">
+                  <Github className="h-4 w-4" aria-hidden="true" />
+                  GitHub
                 </a>
-                <a
-                  href={portfolioData.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => soundManager.playTick(1000)}
-                  aria-label="LinkedIn profile"
-                  className="flex h-11 w-11 items-center justify-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-fg"
-                >
-                  <Linkedin className="h-4.5 w-4.5" />
+              </li>
+              <li>
+                <a href={portfolioData.linkedin} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1.5">
+                  <Linkedin className="h-4 w-4" aria-hidden="true" />
+                  LinkedIn
                 </a>
-              </div>
-            </motion.div>
+              </li>
+            </ul>
           </div>
 
-          {/* Portrait */}
-          <motion.figure
-            variants={{ hidden: { opacity: 0, scale: 0.96 }, show: { opacity: 1, scale: 1 } }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto w-full max-w-60 sm:max-w-75 lg:col-span-4 lg:mx-0 lg:ml-auto"
-          >
-            <div className="relative rotate-[1.5deg] rounded-[22px] border border-line bg-surface p-2.5 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.35)] transition-transform duration-500 hover:rotate-0">
-              <div className="aspect-4/5 overflow-hidden rounded-[14px] bg-surface-2">
-                <img
-                  src={imgSrc}
-                  alt="Portrait of Rhazel Alforque"
-                  loading="eager"
-                  onError={() => setImgSrc('/assets/profile-fallback.jpg')}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <figcaption className="flex items-center justify-between px-1.5 pb-0.5 pt-2.5 font-mono text-[11px] text-muted">
-                <span>Rhazel A.</span>
-                <span>BSIT · Cebu, PH</span>
-              </figcaption>
-            </div>
-          </motion.figure>
+          <img
+            src="/assets/profile.jpg"
+            alt="Portrait of Rhazel Alforque"
+            width={288}
+            height={288}
+            loading="eager"
+            className="order-first h-24 w-24 rounded-[4px] border border-line object-cover md:order-none md:h-52 md:w-52"
+          />
         </div>
 
-        {/* Stats strip */}
-        <motion.dl
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-16 grid grid-cols-2 overflow-hidden rounded-2xl border border-line bg-line sm:mt-20 lg:grid-cols-4"
-          style={{ gap: '1px' }}
-        >
-          {STATS.map((stat) => (
-            <div key={stat.label} className="flex min-w-0 flex-col gap-1 bg-bg/95 p-4 sm:p-6">
-              <dt className="eyebrow order-2">{stat.label}</dt>
-              <dd className="order-1 text-xl font-semibold tracking-[-0.03em] text-fg min-[400px]:text-2xl sm:text-3xl">
-                {stat.value}
-              </dd>
+        <dl className="mt-10 grid grid-cols-1 border-t border-fg sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
+          {FACTS.map((fact) => (
+            <div
+              key={fact.label}
+              className="border-b border-line py-5 last:border-b-0 sm:pr-6 sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:border-l lg:py-6 lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
+            >
+              <dt className="text-sm text-muted">{fact.label}</dt>
+              <dd className="mt-1.5 text-base font-semibold leading-snug text-fg">{fact.value}</dd>
+              <dd className="mt-1 text-sm text-muted">{fact.detail}</dd>
             </div>
           ))}
-        </motion.dl>
-      </motion.div>
+        </dl>
+      </div>
     </section>
   );
 }

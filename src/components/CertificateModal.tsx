@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import { CertificateItem } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
@@ -8,103 +8,75 @@ interface CertificateModalProps {
   onClose: () => void;
 }
 
-// Maps the certificate to its respective image in public/assets/
-function getCertificateImage(certificate: CertificateItem): string {
-  // 1. If an image path is already defined in your data, use it
-  const directPath =
-    (certificate as any).image ||
-    (certificate as any).imageUrl ||
-    (certificate as any).src;
-  if (directPath) return directPath;
-
-  // 2. Otherwise, automatically match by title keywords
-  const title = (certificate.title || '').toLowerCase();
-
-  if (title.includes('kubernetes')) {
-    return '/assets/Kubernetes Certificate.png';
-  }
-  if (title.includes('cloud')) {
-    return '/assets/Cloud Data Ceritification.png';
-  }
-   if (title.includes('devops')) {
-    return '/assets/Devops With Docker Certificates.png';
-  }
-  if (title.includes('docker') || title.includes('devops')) {
-    return '/assets/Using Docker For Devops Cert.png';
-    // or '/assets/using docker for devops Certification.png'
-  }
-
-  return '';
-}
-
 export default function CertificateModal({ certificate, onClose }: CertificateModalProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
+    if (!certificate) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         soundManager.playTick(800);
         onClose();
       }
     };
-
-    if (certificate) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    }
-
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    closeRef.current?.focus();
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
+      previouslyFocused?.focus?.();
     };
   }, [certificate, onClose]);
 
   if (!certificate) return null;
 
-  const imageUrl = getCertificateImage(certificate);
+  const close = () => {
+    soundManager.playTick(800);
+    onClose();
+  };
 
   return (
     <div
       id="certificate-modal-backdrop"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neutral-950/80 backdrop-blur-sm animate-in fade-in duration-200"
-      onClick={() => {
-        soundManager.playTick(800);
-        onClose();
-      }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 sm:p-6"
+      onClick={close}
       role="dialog"
       aria-modal="true"
       aria-label={certificate.title}
     >
-      <div
+      <figure
         id="certificate-modal-card"
-        className="relative max-w-5xl max-h-[90dvh] flex flex-col items-center justify-center"
+        className="relative flex max-h-[90dvh] max-w-4xl flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          id="certificate-modal-close-btn"
-          type="button"
-          onClick={() => {
-            soundManager.playTick(800);
-            onClose();
-          }}
-          className="fixed right-[max(1rem,env(safe-area-inset-right))] top-[max(1rem,env(safe-area-inset-top))] z-10 p-2.5 rounded-full bg-neutral-900/80 text-neutral-300 hover:text-white border border-neutral-700 transition-colors cursor-pointer"
-          aria-label="Close image modal"
-        >
-          <X className="h-5 w-5" />
-        </button>
+        <img
+          src={certificate.image}
+          alt={`Certificate of completion: ${certificate.title}`}
+          width={1600}
+          height={1200}
+          decoding="async"
+          className="h-auto max-h-[calc(100dvh-9rem)] w-auto max-w-full rounded-[4px] bg-white object-contain"
+        />
+        <figcaption className="mt-3 text-sm leading-relaxed text-white">
+          {certificate.title}
+          <span className="block text-white/70">
+            {certificate.provider} course, {certificate.duration}. Completed {certificate.completed}.
+          </span>
+        </figcaption>
+      </figure>
 
-        {/* Certificate Image */}
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={certificate.title || 'Certificate'}
-            className="max-h-[calc(100dvh-7rem)] sm:max-h-[85dvh] max-w-full w-auto h-auto object-contain rounded-xl shadow-2xl border border-neutral-800 bg-neutral-950"
-          />
-        ) : (
-          <div className="p-8 text-neutral-400 bg-neutral-900 rounded-xl border border-neutral-800">
-            No image preview available for this certificate.
-          </div>
-        )}
-      </div>
+      <button
+        ref={closeRef}
+        id="certificate-modal-close-btn"
+        type="button"
+        onClick={close}
+        className="fixed right-[max(1rem,env(safe-area-inset-right))] top-[max(1rem,env(safe-area-inset-top))] z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-[4px] border border-white/40 bg-black text-white transition-colors hover:border-white"
+        aria-label="Close certificate"
+      >
+        <X className="h-5 w-5" />
+      </button>
     </div>
   );
 }

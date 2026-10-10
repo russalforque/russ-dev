@@ -1,20 +1,38 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# russ-dev
 
-# Run and deploy your AI Studio app
+Portfolio site for Rhazel Alforque, a full-stack developer in Cebu City, Philippines.
 
-This contains everything you need to run your app locally.
+Live: https://russ-dev-t86v.vercel.app
 
-View your app in AI Studio: https://ai.studio/apps/691a2f22-b67b-42a0-a8ca-598d9e52d206
+## Stack
 
-## Run Locally
+React 19, TypeScript, Vite and Tailwind CSS v4. It is a static site: there is no server and no database.
 
-**Prerequisites:**  Node.js
+## Run it locally
 
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build in dist/
+npm run lint     # type check
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Where things live
+
+| Path | What it holds |
+| --- | --- |
+| `src/data/portfolioData.ts` | All page content: projects, experience, education, skills, training |
+| `src/data/apps.ts` | Downloadable apps (Studex) |
+| `src/components/` | One component per page section |
+| `src/index.css` | Design tokens (colors, fonts) and shared styles |
+| `public/assets/` | Résumé PDF, profile photo, certificate images |
+
+## Updating content
+
+- **Add a project:** add an entry to `projects` in `src/data/portfolioData.ts`. Set `featured: true` to show it in
+  full under "Selected work", and fill `proves` with two to four specific things the project is evidence of.
+- **Add a screenshot:** put the image in `public/assets/projects/` and set `image: "/assets/projects/<file>"` on the
+  project. Featured projects show it above their write-up.
+- **Skills:** names in a project's `technologies` must match the names in `technologies` (the skills list) for the
+  project counts and the skill filter to pick them up.
+- **Résumé:** replace `public/assets/Rhazel Alforque Resume.pdf`, keeping the file name.

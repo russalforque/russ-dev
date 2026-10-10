@@ -1,90 +1,73 @@
-import { ArrowUpRight, Download, ShieldCheck, Smartphone } from 'lucide-react';
+import { ArrowUpRight, Download } from 'lucide-react';
 import { apps, type AppItem } from '../data/apps';
 import { soundManager } from '../utils/sound';
-import Section, { Em } from './ui/Section';
-import Reveal from './ui/Reveal';
+import Section from './ui/Section';
 
-function AppCard({ app }: { app: AppItem }) {
-  const meta = [app.platform, `v${app.version}`, app.size, app.requirements];
+function AppListing({ app }: { app: AppItem }) {
+  const meta = [app.platform, `Version ${app.version}`, app.size, `Needs ${app.requirements}`];
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-line bg-surface">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        {/* Listing */}
-        <div className="flex flex-col p-6 sm:p-8">
+    <article className="border-t border-line py-9 first:border-t-0 first:pt-0 last:pb-0">
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+        <div>
           <div className="flex items-center gap-4">
             <img
               src={app.icon}
               alt=""
-              width={64}
-              height={64}
-              className="h-16 w-16 shrink-0 rounded-2xl border border-line"
+              width={56}
+              height={56}
+              className="h-14 w-14 shrink-0 rounded-[10px] border border-line"
             />
             <div className="min-w-0">
-              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-fg">{app.name}</h3>
-              <p className="mt-0.5 text-sm text-muted">{app.tagline}</p>
+              <h3 className="text-[1.75rem] font-extrabold leading-[1.1] tracking-[-0.025em] text-fg">{app.name}</h3>
+              <p className="mt-1 text-[15px] leading-snug text-muted">{app.tagline}</p>
             </div>
           </div>
 
-          <p className="mt-6 text-pretty text-[15px] leading-relaxed text-fg/80">{app.description}</p>
+          <p className="mt-5 text-pretty text-[15px] leading-relaxed text-fg">{app.description}</p>
 
-          <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-muted" aria-label="App details">
-            {meta.map((m) => (
-              <li key={m}>{m}</li>
-            ))}
-          </ul>
-
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href={app.downloadUrl}
-              onClick={() => soundManager.playSuccess()}
-              className="group inline-flex h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-on-accent transition-transform hover:-translate-y-0.5"
-            >
-              <Download className="h-4 w-4" />
-              Download APK
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a href={app.downloadUrl} onClick={() => soundManager.playSuccess()} className="btn btn-primary">
+              <Download className="h-4 w-4" aria-hidden="true" />
+              Download the APK
             </a>
-            {app.websiteUrl && (
-              <a
-                href={app.websiteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => soundManager.playTick(1000)}
-                className="inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 text-sm font-medium text-fg transition-colors hover:border-fg"
-              >
-                Website
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
-            )}
           </div>
+          <p className="mt-3 text-sm text-muted">{meta.join(', ')}</p>
 
-          <p className="mt-auto flex items-start gap-2 pt-8 text-xs leading-relaxed text-muted">
-            <Smartphone className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-            <span>
-              Android may ask you to allow installs from your browser the first time.
-              {app.installGuideUrl && (
-                <>
-                  {' '}
-                  <a
-                    href={app.installGuideUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline decoration-line-strong underline-offset-2 transition-colors hover:text-fg"
-                  >
-                    Install guide
-                  </a>
-                </>
-              )}
-            </span>
-          </p>
+          <ul className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[15px]">
+            {app.websiteUrl && (
+              <li>
+                <a href={app.websiteUrl} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
+                  Website
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </li>
+            )}
+            {app.installGuideUrl && (
+              <li>
+                <a href={app.installGuideUrl} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
+                  Install guide
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </li>
+            )}
+            {app.sourceUrl && (
+              <li>
+                <a href={app.sourceUrl} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
+                  Source code
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </li>
+            )}
+          </ul>
         </div>
 
-        {/* Details */}
-        <div className="border-t border-line bg-bg/40 p-6 sm:p-8 lg:border-l lg:border-t-0">
-          <h4 className="eyebrow">What's inside</h4>
-          <ul className="mt-4 space-y-2.5">
+        <div>
+          <h4 className="text-sm font-semibold text-fg">What it does</h4>
+          <ul className="mt-3 space-y-2.5">
             {app.features.map((f) => (
-              <li key={f} className="flex gap-3 text-sm leading-relaxed text-fg/85">
-                <span className="mt-[0.6rem] h-px w-3 shrink-0 bg-accent" aria-hidden="true" />
+              <li key={f} className="flex gap-3 text-[15px] leading-relaxed text-fg">
+                <span className="mt-[0.7em] h-px w-3 shrink-0 bg-fg" aria-hidden="true" />
                 {f}
               </li>
             ))}
@@ -92,38 +75,28 @@ function AppCard({ app }: { app: AppItem }) {
 
           {app.plans && app.plans.length > 0 && (
             <>
-          <h4 className="eyebrow mt-8">Pricing</h4>
-          <div className={`mt-4 grid gap-3 ${app.plans.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
-            {app.plans.map((plan) => (
-              <div key={plan.name} className="rounded-xl border border-line bg-surface p-4">
-                <div className="flex items-baseline justify-between gap-2">
-                  <span className="text-sm font-medium text-fg">{plan.name}</span>
-                  <span className="text-lg font-semibold tracking-tight text-fg">{plan.price}</span>
-                </div>
-                <p className="mt-1.5 text-xs leading-relaxed text-muted">{plan.note}</p>
-              </div>
-            ))}
-          </div>
+              <h4 className="mt-6 text-sm font-semibold text-fg">Pricing</h4>
+              <dl className="mt-2 divide-y divide-line border-y border-line">
+                {app.plans.map((plan) => (
+                  <div key={plan.name} className="flex items-baseline justify-between gap-4 py-3">
+                    <dt className="text-[15px] text-fg">
+                      {plan.name}
+                      <span className="block text-sm text-muted">{plan.note}</span>
+                    </dt>
+                    <dd className="text-[15px] font-semibold text-fg">{plan.price}</dd>
+                  </div>
+                ))}
+              </dl>
             </>
           )}
 
-          <div className="mt-8 flex flex-wrap items-center gap-2">
+          <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Built with">
             {app.stack.map((t) => (
-              <span key={t} className="rounded-full border border-line px-2.5 py-1 font-mono text-[11px] text-muted">
+              <li key={t} className="tag">
                 {t}
-              </span>
+              </li>
             ))}
-            {app.sourceUrl && (
-              <a
-                href={app.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-auto inline-flex items-center gap-1 font-mono text-[11px] text-muted transition-colors hover:text-accent"
-              >
-                Source <ArrowUpRight className="h-3 w-3" />
-              </a>
-            )}
-          </div>
+          </ul>
         </div>
       </div>
     </article>
@@ -135,29 +108,13 @@ export default function AppShop() {
 
   return (
     <Section
-      id="shop"
-      index="02"
-      label="Shop"
-      title={
-        <>
-          Apps you can <Em>download</Em>
-        </>
-      }
-      intro="Software I've built and shipped. Download it, install it, and use it today."
-      aside={
-        <span className="inline-flex items-center gap-1.5 font-mono text-xs text-muted">
-          <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
-          Free to download
-        </span>
-      }
+      id="apps"
+      title={apps.length === 1 ? 'Shipped app' : 'Shipped apps'}
+      note="Released software you can install and use today. Free to download."
     >
-      <div className="space-y-5">
-        {apps.map((app) => (
-          <Reveal key={app.id}>
-            <AppCard app={app} />
-          </Reveal>
-        ))}
-      </div>
+      {apps.map((app) => (
+        <AppListing key={app.id} app={app} />
+      ))}
     </Section>
   );
 }

@@ -2,10 +2,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { MotionConfig } from 'motion/react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
-import ProjectList from './components/ProjectList';
+import ProjectList, { ProjectArchive } from './components/ProjectList';
 import ProjectModal from './components/ProjectModal';
 import AppShop from './components/AppShop';
-import ExperienceTimeline from './components/ExperienceTimeline';
+import ExperienceTimeline, { Education } from './components/ExperienceTimeline';
 import TechStack from './components/TechStack';
 import GitHubActivity from './components/GitHubActivity';
 import AboutSection from './components/AboutSection';
@@ -14,8 +14,6 @@ import CertificateModal from './components/CertificateModal';
 import ContactSection from './components/ContactSection';
 import CommandPalette from './components/CommandPalette';
 import TerminalDrawer from './components/TerminalDrawer';
-import LiveViewersBadge from './components/LiveViewersBadge';
-import { usePresence } from './utils/presence';
 import { portfolioData, Project, CertificateItem } from './data/portfolioData';
 import { soundManager } from './utils/sound';
 import { openResume } from './utils/resume';
@@ -25,13 +23,9 @@ export default function App() {
   const [selectedCertificate, setSelectedCertificate] = useState<CertificateItem | null>(null);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
-  const [isVisitorsModalOpen, setIsVisitorsModalOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [activeSection, setActiveSection] = useState('projects');
+  const [activeSection, setActiveSection] = useState('');
   const [selectedTechFilter, setSelectedTechFilter] = useState<string | null>(null);
-
-  // Live Presence Tracking
-  const { presence } = usePresence(activeSection);
 
   // Sound state
   const [soundEnabled, setSoundEnabled] = useState(() => soundManager.isEnabled());
@@ -144,7 +138,18 @@ export default function App() {
 
   // Section Observer for active scroll state
   useEffect(() => {
-    const sections = ['projects', 'shop', 'experience', 'stack', 'about', 'certifications', 'contact'];
+    const sections = [
+      'projects',
+      'apps',
+      'more-projects',
+      'experience',
+      'education',
+      'stack',
+      'github-activity',
+      'certifications',
+      'about',
+      'contact',
+    ];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -169,7 +174,7 @@ export default function App() {
     <div className="relative min-h-screen bg-bg font-sans text-fg antialiased">
       <a
         href="#projects"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:text-bg"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-[4px] focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:text-bg"
       >
         Skip to content
       </a>
@@ -179,66 +184,45 @@ export default function App() {
         activeSection={activeSection}
         darkMode={darkMode}
         onToggleTheme={handleToggleTheme}
-        soundEnabled={soundEnabled}
-        onToggleSound={handleToggleSound}
-        onOpenTerminal={() => setIsTerminalOpen(true)}
       />
 
-      {/* Main Container */}
       <main>
-        {/* Hero Section */}
-        <Hero
-          onCopyEmail={handleCopyEmail}
-          copied={copiedEmail}
-          onOpenTerminal={() => setIsTerminalOpen(true)}
-          onlineCount={presence.onlineCount}
-          activeViewers={presence.activeViewers}
-          onOpenVisitorsModal={() => setIsVisitorsModalOpen(true)}
-        />
+        {/* Who, what role, what stack, how to get in touch */}
+        <Hero />
 
-        {/* 01 Projects List */}
+        {/* Proof: featured work, the shipped app, then everything else */}
         <ProjectList
           projects={portfolioData.projects}
           onSelectProject={(project) => setSelectedProject(project)}
           selectedTechFilter={selectedTechFilter}
           onClearTechFilter={() => setSelectedTechFilter(null)}
         />
-
-        {/* 02 App Shop */}
         <AppShop />
+        <ProjectArchive
+          projects={portfolioData.projects}
+          onSelectProject={(project) => setSelectedProject(project)}
+          selectedTechFilter={selectedTechFilter}
+        />
 
-        {/* 03 Experience Timeline */}
+        {/* Background */}
         <ExperienceTimeline />
+        <Education />
 
-        {/* 03 Technology Stack */}
         <TechStack
           selectedTech={selectedTechFilter}
-          onSelectTech={(tech) =>
-            setSelectedTechFilter((prev) => (prev === tech ? null : tech))
-          }
+          onSelectTech={(tech) => setSelectedTechFilter((prev) => (prev === tech ? null : tech))}
           projects={portfolioData.projects}
         />
-
-        {/* 04 GitHub Contribution Graph */}
         <GitHubActivity darkMode={darkMode} />
 
-        {/* 05 About Section */}
-        <AboutSection
-        />
+        <CertificationsList onSelectCertificate={(cert) => setSelectedCertificate(cert)} />
 
-        {/* 06 Certifications List */}
-        <CertificationsList
-          onSelectCertificate={(cert) => setSelectedCertificate(cert)}
-        />
+        <AboutSection />
 
-        {/* 07 Contact Section */}
-        <ContactSection
-          onCopyEmail={handleCopyEmail}
-          copied={copiedEmail}
-        />
+        <ContactSection onCopyEmail={handleCopyEmail} copied={copiedEmail} />
       </main>
 
-      {/* Developer CLI Terminal Drawer */}
+      {/* Developer terminal: an easter egg behind the ~ key and the command palette */}
       <TerminalDrawer
         isOpen={isTerminalOpen}
         onClose={() => setIsTerminalOpen(false)}
@@ -247,30 +231,7 @@ export default function App() {
         onToggleTheme={handleToggleTheme}
         darkMode={darkMode}
         onCopyEmail={handleCopyEmail}
-        onOpenVisitorsModal={() => setIsVisitorsModalOpen(true)}
       />
-
-      {/* Floating CLI Launcher Pill */}
-      {!isTerminalOpen && (
-        <button
-          id="floating-terminal-trigger"
-          onClick={() => {
-            soundManager.playTick(1200);
-            setIsTerminalOpen(true);
-          }}
-          className="fixed bottom-5 right-5 z-30 hidden cursor-pointer items-center gap-2 rounded-full border border-line bg-surface/90 px-3.5 py-2 font-mono text-xs text-fg shadow-lg backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong sm:inline-flex"
-          title="Open Interactive Developer CLI (Shortcut: ~)"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
-          <span className="font-medium">&gt;_ terminal</span>
-          <kbd className="rounded bg-surface-2 px-1.5 py-0.5 text-[10px] text-muted">
-            ~
-          </kbd>
-        </button>
-      )}
 
       <ProjectModal
         project={selectedProject}
@@ -293,7 +254,6 @@ export default function App() {
         darkMode={darkMode}
         onToggleSound={handleToggleSound}
         soundEnabled={soundEnabled}
-        onOpenVisitorsModal={() => setIsVisitorsModalOpen(true)}
       />
     </div>
     </MotionConfig>

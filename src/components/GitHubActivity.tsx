@@ -2,8 +2,7 @@ import { useEffect, useRef } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
 import { ArrowUpRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
-import Section, { Em } from './ui/Section';
-import Reveal from './ui/Reveal';
+import Section from './ui/Section';
 
 interface GitHubActivityProps {
   darkMode?: boolean;
@@ -31,44 +30,28 @@ export default function GitHubActivity({ darkMode }: GitHubActivityProps) {
   return (
     <Section
       id="github-activity"
-      index="05"
-      label="Activity"
-      title={
-        <>
-          Building in <Em>public</Em>
-        </>
-      }
-      aside={
-        <a
-          href={portfolioData.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 font-mono text-xs text-muted transition-colors hover:text-accent"
-        >
+      title="GitHub activity"
+      note={
+        <a href={portfolioData.github} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
           @{username}
-          <ArrowUpRight className="h-3 w-3" />
+          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
         </a>
       }
     >
-      <Reveal>
-        <div
-          ref={scrollerRef}
-          className="overflow-x-auto overscroll-x-contain rounded-2xl border border-line bg-surface p-4 text-muted sm:p-7"
-        >
-          <GitHubCalendar
-            username={username}
-            colorScheme={darkMode ? 'dark' : 'light'}
-            blockSize={11}
-            blockMargin={4}
-            blockRadius={3}
-            fontSize={12}
-            theme={{
-              light: ['#e7e5de', '#fdc9a8', '#f99a63', '#f0560f', '#b83d05'],
-              dark: ['#1f1f1d', '#4a2414', '#8a3a15', '#d85a1c', '#ff7638'],
-            }}
-          />
-        </div>
-      </Reveal>
+      <div ref={scrollerRef} className="overflow-x-auto overscroll-x-contain text-muted">
+        <GitHubCalendar
+          username={username}
+          colorScheme={darkMode ? 'dark' : 'light'}
+          blockSize={11}
+          blockMargin={4}
+          blockRadius={2}
+          fontSize={13}
+          theme={{
+            light: ['#eceef1', '#c3cdf6', '#8a9eee', '#4a67e0', '#1a3fcf'],
+            dark: ['#1c2026', '#28356b', '#3b4fa8', '#6f86e8', '#9fb2ff'],
+          }}
+        />
+      </div>
     </Section>
   );
 }

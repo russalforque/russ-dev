@@ -22,7 +22,6 @@ interface TerminalDrawerProps {
   onToggleTheme: () => void;
   darkMode: boolean;
   onCopyEmail: () => void;
-  onOpenVisitorsModal?: () => void;
 }
 
 interface CommandOutput {
@@ -41,7 +40,6 @@ export default function TerminalDrawer({
   onToggleTheme,
   darkMode,
   onCopyEmail,
-  onOpenVisitorsModal,
 }: TerminalDrawerProps) {
   const [isMaximized, setIsMaximized] = useState(false);
   const [inputVal, setInputVal] = useState('');
@@ -121,10 +119,10 @@ export default function TerminalDrawer({
             <div className="border border-emerald-500/40 bg-emerald-950/30 p-3 space-y-2 font-mono">
               <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs">
                 <Briefcase className="w-3.5 h-3.5" />
-                <span>Ready to ship production code</span>
+                <span>Open to junior .NET and full-stack roles</span>
               </div>
               <p className="text-neutral-300 text-[11px] leading-relaxed">
-                Focused on Full-Stack (.NET / React) and Cloud Architecture. Open to Remote or Hybrid roles.
+                Full-stack developer working in C#, ASP.NET Core, SQL Server and React. Open to remote or hybrid roles.
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 <a
@@ -246,7 +244,7 @@ export default function TerminalDrawer({
             <div className="font-mono text-[11px] space-y-1 border border-neutral-800 bg-neutral-900/40 p-2.5">
               <p>• Availability: <span className="text-emerald-400 font-bold">Open to Offers</span></p>
               <p>• Location: <span className="text-white">Cebu City, Philippines (UTC+8)</span></p>
-              <p>• Core Focus: <span className="text-white">Full-Stack &amp; Cloud Systems</span></p>
+              <p>• Core Focus: <span className="text-white">Full-stack development (.NET and React)</span></p>
             </div>
           ),
         });

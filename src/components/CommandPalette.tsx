@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { 
   FolderGit2, 
-  ShoppingBag,
   Briefcase, 
   Layers, 
-  User, 
   Award, 
   Mail, 
   Github, 
@@ -18,7 +16,6 @@ import {
   Moon,
   Volume2,
   VolumeX,
-  Users,
 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
@@ -34,7 +31,6 @@ interface CommandPaletteProps {
   darkMode: boolean;
   onToggleSound: () => void;
   soundEnabled: boolean;
-  onOpenVisitorsModal?: () => void;
 }
 
 interface PaletteItem {
@@ -57,7 +53,6 @@ export default function CommandPalette({
   darkMode,
   onToggleSound,
   soundEnabled,
-  onOpenVisitorsModal,
 }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -67,7 +62,7 @@ export default function CommandPalette({
   const items: PaletteItem[] = [
     {
       id: 'projects',
-      label: 'Projects',
+      label: 'Work',
       category: 'Navigation',
       shortcut: 'P',
       icon: FolderGit2,
@@ -78,19 +73,8 @@ export default function CommandPalette({
       },
     },
     {
-      id: 'shop',
-      label: 'Shop: download my apps',
-      category: 'Navigation',
-      icon: ShoppingBag,
-      action: () => {
-        soundManager.playTick(1000);
-        onNavigate('shop');
-        onClose();
-      },
-    },
-    {
       id: 'experience',
-      label: 'Work Experience',
+      label: 'Experience and education',
       category: 'Navigation',
       shortcut: 'E',
       icon: Briefcase,
@@ -102,7 +86,7 @@ export default function CommandPalette({
     },
     {
       id: 'stack',
-      label: 'Tech Stack',
+      label: 'Skills',
       category: 'Navigation',
       shortcut: 'S',
       icon: Layers,
@@ -113,20 +97,8 @@ export default function CommandPalette({
       },
     },
     {
-      id: 'about',
-      label: 'About Me',
-      category: 'Navigation',
-      shortcut: 'A',
-      icon: User,
-      action: () => {
-        soundManager.playTick(1000);
-        onNavigate('about');
-        onClose();
-      },
-    },
-    {
       id: 'certifications',
-      label: 'Certifications',
+      label: 'Training certificates',
       category: 'Navigation',
       shortcut: 'T',
       icon: Award,
@@ -145,20 +117,6 @@ export default function CommandPalette({
       action: () => {
         soundManager.playTick(1000);
         onNavigate('contact');
-        onClose();
-      },
-    },
-    {
-      id: 'visitors',
-      label: 'Live Visitor Log',
-      category: 'Action',
-      shortcut: 'V',
-      icon: Users,
-      action: () => {
-        soundManager.playTick(1000);
-        if (onOpenVisitorsModal) {
-          onOpenVisitorsModal();
-        }
         onClose();
       },
     },
