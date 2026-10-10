@@ -1,12 +1,8 @@
-import { portfolioData, CertificateItem } from '../data/portfolioData';
-import { soundManager } from '../utils/sound';
+import { ArrowUpRight } from 'lucide-react';
+import { portfolioData } from '../data/portfolioData';
 import Section from './ui/Section';
 
-interface CertificationsListProps {
-  onSelectCertificate: (certificate: CertificateItem) => void;
-}
-
-export default function CertificationsList({ onSelectCertificate }: CertificationsListProps) {
+export default function CertificationsList() {
   return (
     <Section
       id="certifications"
@@ -25,20 +21,17 @@ export default function CertificationsList({ onSelectCertificate }: Certificatio
                 {cert.provider} course, {cert.duration}. Completed {cert.completed}. Certificate no. {cert.certNumber}.
               </p>
             </div>
-            <div>
-              <button
-                id={`cert-card-${cert.id}`}
-                type="button"
-                onClick={() => {
-                  soundManager.playTick(1000);
-                  onSelectCertificate(cert);
-                }}
-                className="btn btn-secondary min-h-10 px-3.5 text-sm"
-                aria-label={`View certificate: ${cert.title}`}
-              >
-                View certificate
-              </button>
-            </div>
+            {/* A plain link to the image: no modal, no script, and it can be opened in a new tab or saved. */}
+            <a
+              href={cert.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link inline-flex items-center gap-1 text-[15px]"
+              aria-label={`View certificate: ${cert.title}`}
+            >
+              View certificate
+              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
           </li>
         ))}
       </ul>

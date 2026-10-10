@@ -1,6 +1,5 @@
 import { FileText, Github, Linkedin, Mail } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
-import { soundManager } from '../utils/sound';
 import { RESUME_URL } from '../utils/resume';
 
 /**
@@ -58,7 +57,6 @@ export default function Hero() {
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundManager.playTick(1000)}
                 className="btn btn-primary"
               >
                 <FileText className="h-4 w-4" aria-hidden="true" />
@@ -66,7 +64,6 @@ export default function Hero() {
               </a>
               <a
                 href={`mailto:${portfolioData.email}`}
-                onClick={() => soundManager.playTick(1000)}
                 className="btn btn-secondary"
               >
                 <Mail className="h-4 w-4" aria-hidden="true" />

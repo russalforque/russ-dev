@@ -28,6 +28,23 @@
     <meta property="og:image" content="https://russ-dev-t86v.vercel.app/assets/profile.jpg" />
     <meta name="twitter:card" content="summary" />
 
+    <!-- Structured data, so search engines and link previews read this as a person's profile -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Rhazel Alforque",
+        "jobTitle": "Full-stack developer",
+        "url": "https://russ-dev-t86v.vercel.app/",
+        "image": "https://russ-dev-t86v.vercel.app/assets/profile.jpg",
+        "email": "mailto:russavenido@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Cebu City", "addressCountry": "PH" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Asian College of Technology" },
+        "knowsAbout": ["C#", "ASP.NET Core", "SQL Server", "React", "TypeScript"],
+        "sameAs": ["https://github.com/russalforque", "https://www.linkedin.com/in/rhazel-alforoque-000643295/"]
+      }
+    </script>
+
     <!-- Apply saved / OS theme before first paint to avoid a flash -->
     <script>
       (function () {
@@ -43,12 +60,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Libre+Franklin:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
   </head>
   <body class="min-h-screen">
     <div id="root"></div>
+    <noscript>
+      <p style="max-width: 40rem; margin: 3rem auto; padding: 0 1.25rem; font: 16px/1.6 system-ui, sans-serif">
+        This page needs JavaScript to render. You can still read my
+        <a href="/assets/Rhazel%20Alforque%20Resume.pdf">résumé (PDF)</a>, see my code at
+        <a href="https://github.com/russalforque">github.com/russalforque</a>, or email
+        <a href="mailto:russavenido@gmail.com">russavenido@gmail.com</a>.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -5,6 +5,8 @@ interface SectionProps {
   title: string;
   /** Short line under the heading, e.g. a count or a caveat */
   note?: ReactNode;
+  /** Extra content for the heading column, e.g. a list of jump links */
+  aside?: ReactNode;
   children: ReactNode;
 }
 
@@ -12,7 +14,7 @@ interface SectionProps {
  * Shared section layout, set like a résumé: the heading sits in a narrow
  * left column and stays in view while its content scrolls on the right.
  */
-export default function Section({ id, title, note, children }: SectionProps) {
+export default function Section({ id, title, note, aside, children }: SectionProps) {
   return (
     <section id={id} aria-labelledby={`${id}-title`}>
       <div className="container-page">
@@ -23,6 +25,7 @@ export default function Section({ id, title, note, children }: SectionProps) {
                 {title}
               </h2>
               {note && <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">{note}</p>}
+              {aside}
             </div>
           </div>
           <div className="min-w-0">{children}</div>

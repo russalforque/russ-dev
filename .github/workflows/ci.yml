@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Type check, test, build, smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run lint
+
+      - name: Content tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Report bundle size
+        run: |
+          for file in dist/assets/*.js dist/assets/*.css; do
+            echo "::notice title=Bundle size::$(basename "$file"): $(wc -c < "$file") bytes, $(gzip -c "$file" | wc -c) gzipped"
+          done
+
+      # Playwright is installed here rather than in package.json so the site itself stays dependency-light.
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+
+      - name: Browser smoke test
+        run: |
+          npx vite preview --port 4173 --strictPort &
+          node tests/smoke.mjs

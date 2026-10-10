@@ -66,6 +66,7 @@
 @layer base {
   html {
     color-scheme: light;
+    scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -192,7 +193,6 @@
 /* A recruiter may well print this page. */
 @media print {
   header,
-  dialog,
   .no-print {
     display: none !important;
   }

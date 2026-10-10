@@ -1,5 +1,5 @@
-import { portfolioData, Project } from '../data/portfolioData';
-import { soundManager } from '../utils/sound';
+import { portfolioData, type Project } from '../data/portfolioData';
+import { usesTech } from './ProjectList';
 import Section from './ui/Section';
 
 interface TechStackProps {
@@ -9,8 +9,7 @@ interface TechStackProps {
 }
 
 export default function TechStack({ selectedTech, onSelectTech, projects }: TechStackProps) {
-  const countFor = (tech: string) =>
-    projects.filter((p) => p.technologies.some((t) => t.toLowerCase() === tech.toLowerCase())).length;
+  const countFor = (tech: string) => projects.filter((p) => usesTech(p, tech)).length;
 
   return (
     <Section
@@ -47,9 +46,9 @@ export default function TechStack({ selectedTech, onSelectTech, projects }: Tech
                         type="button"
                         aria-pressed={isSelected}
                         onClick={() => {
-                          soundManager.playTick(1100);
                           onSelectTech(tech);
-                          if (!isSelected) document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                          // Smoothness comes from CSS, which also honours reduced-motion.
+                          if (!isSelected) document.getElementById('projects')?.scrollIntoView();
                         }}
                         className={`inline-flex min-h-10 cursor-pointer sm:min-h-9 items-center gap-2 rounded-[3px] border px-3 text-sm font-semibold leading-none transition-colors ${
                           isSelected
