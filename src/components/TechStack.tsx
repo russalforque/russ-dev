@@ -1,6 +1,7 @@
 import { portfolioData, Project } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
-import Section, { Em } from './ui/Section';
+import { PageHeader } from './ui/Section';
+import { navigate } from '../utils/router';
 import Reveal from './ui/Reveal';
 
 interface TechStackProps {
@@ -14,33 +15,22 @@ export default function TechStack({ selectedTech, onSelectTech, projects }: Tech
     projects.filter((p) => p.technologies.some((t) => t.toLowerCase() === tech.toLowerCase())).length;
 
   return (
-    <Section
-      id="stack"
-      index="04"
-      label="Stack"
-      title={
-        <>
-          Tools I <Em>reach for</Em>
-        </>
-      }
-      intro="The frameworks and platforms I work with across the front end, back end, data, and cloud operations."
-    >
+    <div id="stack" className="pb-14">
+      <PageHeader
+        title="Stack"
+        intro="The frameworks and platforms I work with across the front end, back end, data and cloud operations. Tap a highlighted tool to see the projects built with it."
+      />
       <Reveal>
-        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
-          {portfolioData.technologies.map((group, gi) => (
-            <div key={group.category} className="bg-surface p-6 sm:p-7">
-              <div className="flex items-baseline justify-between">
-                <h3 className="text-sm font-semibold text-fg">{group.category}</h3>
-                <span className="font-mono text-[11px] text-faint">
-                  {String(gi + 1).padStart(2, '0')} / {String(group.items.length).padStart(2, '0')}
-                </span>
-              </div>
+        <div className="divide-y divide-line border-y border-line">
+          {portfolioData.technologies.map((group) => (
+            <div key={group.category} className="grid gap-3 py-5 sm:grid-cols-[9rem_1fr] sm:gap-6">
+              <h3 className="eyebrow pt-1">{group.category}</h3>
 
-              <ul className="mt-5 flex flex-wrap gap-2">
+              <ul className="flex flex-wrap gap-1.5">
                 {group.items.map((tech) => {
                   const count = countFor(tech);
                   const isSelected = selectedTech === tech;
-                  const base = 'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs';
+                  const base = 'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px]';
 
                   // Only technologies tagged on projects act as filters.
                   if (count === 0) {
@@ -59,18 +49,20 @@ export default function TechStack({ selectedTech, onSelectTech, projects }: Tech
                         aria-pressed={isSelected}
                         onClick={() => {
                           soundManager.playTick(1100);
-                          onSelectTech(tech);
-                          if (!isSelected) document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                          if (isSelected) {
+                            onSelectTech(null);
+                          } else {
+                            onSelectTech(tech);
+                            navigate('/projects');
+                          }
                         }}
                         className={`${base} cursor-pointer transition-colors ${
-                          isSelected
-                            ? 'border-fg bg-fg text-bg'
-                            : 'border-line-strong text-fg hover:border-accent hover:text-accent'
+                          isSelected ? 'border-fg bg-fg text-bg' : 'border-line-strong text-fg hover:border-fg'
                         }`}
                         title={`Show ${count} project${count === 1 ? '' : 's'} built with ${tech}`}
                       >
                         {tech}
-                        <span className="opacity-60">{count}</span>
+                        <span className="opacity-50">{count}</span>
                       </button>
                     </li>
                   );
@@ -80,6 +72,6 @@ export default function TechStack({ selectedTech, onSelectTech, projects }: Tech
           ))}
         </div>
       </Reveal>
-    </Section>
+    </div>
   );
 }

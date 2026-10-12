@@ -1,31 +1,26 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { ArrowUpRight, Copy, Check, FileText, Github, Linkedin } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import { apps } from '../data/apps';
 import { soundManager } from '../utils/sound';
 import { RESUME_URL } from '../utils/resume';
-import { ActiveViewer } from '../utils/presence';
+import Reveal from './ui/Reveal';
 
 interface HeroProps {
   onCopyEmail: () => void;
   copied: boolean;
-  onOpenTerminal: () => void;
-  onlineCount: number;
-  activeViewers: ActiveViewer[];
-  onOpenVisitorsModal: () => void;
 }
 
-/** Live HH:MM clock for Cebu (Asia/Manila, UTC+8) */
+/** Live clock for Cebu (Asia/Manila, UTC+8) */
 function useCebuTime() {
   const [time, setTime] = useState('');
   useEffect(() => {
-    const formatter = new Intl.DateTimeFormat('en-GB', {
+    const formatter = new Intl.DateTimeFormat('en-US', {
       timeZone: 'Asia/Manila',
-      hour: '2-digit',
+      hour: 'numeric',
       minute: '2-digit',
-      hour12: false,
     });
-    const update = () => setTime(formatter.format(new Date()));
+    const update = () => setTime(formatter.format(new Date()).toLowerCase());
     update();
     const interval = setInterval(update, 1000 * 15);
     return () => clearInterval(interval);
@@ -33,167 +28,123 @@ function useCebuTime() {
   return time;
 }
 
-const firstYear = Math.min(...portfolioData.experience.map((e) => Number(e.year)).filter(Boolean));
+const latestApp = apps[0];
 
-const STATS = [
-  { value: String(portfolioData.projects.length).padStart(2, '0'), label: 'Projects shipped' },
-  { value: String(portfolioData.certifications.length).padStart(2, '0'), label: 'Cloud & DevOps certs' },
-  { value: `${firstYear}`, label: 'Building since' },
-  { value: '.NET + React', label: 'Core stack' },
+/** What I'm up to right now, printed like terminal output */
+const NOW = [
+  latestApp && `shipping ${latestApp.name} v${latestApp.version} for Android`,
+  'learning Docker, Kubernetes & GCP',
+  'open to junior .NET / full-stack roles',
+].filter(Boolean) as string[];
+
+const LINKS = [
+  { label: 'github', href: portfolioData.github },
+  { label: 'linkedin', href: portfolioData.linkedin },
+  { label: 'instagram', href: portfolioData.instagram },
+  { label: 'résumé', href: RESUME_URL },
 ];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
 
 export default function Hero({ onCopyEmail, copied }: HeroProps) {
   const cebuTime = useCebuTime();
-  const [imgSrc, setImgSrc] = useState('/assets/profile.jpg');
 
   return (
-    <section id="hero-section" aria-label="Introduction" className="relative isolate overflow-hidden">
-      <div className="bg-grid pointer-events-none absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
+    <section id="top" aria-label="Introduction" className="relative pb-14 pt-16 sm:pt-24">
+      <div className="grid gap-10 sm:grid-cols-[13rem_1fr] sm:items-start sm:gap-12">
+        {/* Polaroid */}
+        <Reveal className="mx-auto w-52 sm:mx-0">
+          <figure className="-rotate-2 rounded-sm border border-line bg-surface p-2.5 pb-3 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.45)] transition-transform duration-500 hover:rotate-0">
+            <img
+              src="/assets/profile.jpg"
+              alt="Portrait of Rhazel Alforque"
+              width={400}
+              height={480}
+              loading="eager"
+              fetchPriority="high"
+              draggable={false}
+              className="block aspect-5/6 h-auto w-full select-none object-cover"
+            />
+            <figcaption className="mt-2.5 flex items-baseline justify-between px-0.5">
+              <span className="font-serif text-lg italic leading-none text-fg">cebu, ph</span>
+              <span className="font-mono text-[10px] text-faint">{cebuTime || '—'}</span>
+            </figcaption>
+          </figure>
+        </Reveal>
 
-      <motion.div
-        className="container-page pb-16 pt-12 sm:pb-24 sm:pt-20"
-        initial="hidden"
-        animate="show"
-        transition={{ staggerChildren: 0.08 }}
-      >
-        {/* Identity row */}
-        <motion.div
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-line pb-5"
-        >
-          <h1 className="font-mono text-sm text-fg">
-            Rhazel Alforque <span className="text-faint">—</span> <span className="text-muted">Full Stack Developer</span>
-          </h1>
-          <span className="font-mono text-xs text-muted">
-            {portfolioData.location} · {cebuTime || '--:--'} UTC+8
-          </span>
-        </motion.div>
+        <div>
+          <Reveal delay={0.05}>
+            <p className="font-mono text-[12px] text-muted">
+              <span className="text-accent">●</span> full stack developer
+            </p>
+            <h1 className="mt-3 font-serif text-5xl leading-[0.95] tracking-[-0.01em] text-fg sm:text-[3.6rem]">
+              Rhazel <span className="italic text-accent">Alforque</span>
+            </h1>
+          </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 items-end gap-12 lg:mt-14 lg:grid-cols-12">
-          {/* Statement */}
-          <div className="lg:col-span-8">
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-balance text-[clamp(2.5rem,6.6vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-fg"
-            >
-              I turn rough ideas into{' '}
-              <span className="font-serif font-normal italic tracking-[-0.02em] text-accent">software</span>{' '}
-              people actually use.
-            </motion.p>
+          <Reveal delay={0.1}>
+            <p className="mt-6 text-[15px] leading-relaxed text-muted">
+              I build clean, practical software with C#, ASP.NET Core, React and SQL, for real problems like
+              booking, retail and public service. I love turning rough ideas into things people actually use.
+            </p>
+          </Reveal>
 
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-7 max-w-xl text-pretty text-base leading-relaxed text-muted sm:text-lg"
-            >
-              Full-stack developer working across C#, ASP.NET Core, React and SQL — building clean,
-              practical applications for real business problems, from booking systems to offline-first
-              point of sale.
-            </motion.p>
-
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-9 flex flex-wrap items-center gap-3"
-            >
-              <a
-                href={RESUME_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => soundManager.playTick(1000)}
-                className="group inline-flex h-11 items-center gap-2 rounded-full bg-fg px-5 text-sm font-medium text-bg transition-transform hover:-translate-y-0.5"
-              >
-                <FileText className="h-4 w-4" />
-                View résumé
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-
+          <Reveal delay={0.15}>
+            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-[12px] text-muted">
+              {LINKS.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => soundManager.playTick(1000)}
+                  className="underline decoration-transparent underline-offset-4 transition-colors hover:text-fg hover:decoration-accent"
+                >
+                  {l.label} ↗
+                </a>
+              ))}
               <button
                 type="button"
                 onClick={() => {
                   soundManager.playSuccess();
                   onCopyEmail();
                 }}
-                className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-surface px-5 text-sm font-medium text-fg transition-colors hover:border-fg"
                 aria-live="polite"
+                className="inline-flex cursor-pointer items-center gap-1 transition-colors hover:text-fg"
               >
-                {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-muted" />}
-                {copied ? 'Email copied' : 'Copy email'}
+                {copied ? (
+                  <>
+                    email copied <Check className="h-3 w-3 text-accent" />
+                  </>
+                ) : (
+                  'copy email'
+                )}
               </button>
-
-              <div className="ml-1 flex items-center gap-1">
-                <a
-                  href={portfolioData.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => soundManager.playTick(1000)}
-                  aria-label="GitHub profile"
-                  className="flex h-11 w-11 items-center justify-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-fg"
-                >
-                  <Github className="h-4.5 w-4.5" />
-                </a>
-                <a
-                  href={portfolioData.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => soundManager.playTick(1000)}
-                  aria-label="LinkedIn profile"
-                  className="flex h-11 w-11 items-center justify-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-fg"
-                >
-                  <Linkedin className="h-4.5 w-4.5" />
-                </a>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Portrait */}
-          <motion.figure
-            variants={{ hidden: { opacity: 0, scale: 0.96 }, show: { opacity: 1, scale: 1 } }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto w-full max-w-60 sm:max-w-75 lg:col-span-4 lg:mx-0 lg:ml-auto"
-          >
-            <div className="relative rotate-[1.5deg] rounded-[22px] border border-line bg-surface p-2.5 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.35)] transition-transform duration-500 hover:rotate-0">
-              <div className="aspect-4/5 overflow-hidden rounded-[14px] bg-surface-2">
-                <img
-                  src={imgSrc}
-                  alt="Portrait of Rhazel Alforque"
-                  loading="eager"
-                  onError={() => setImgSrc('/assets/profile-fallback.jpg')}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <figcaption className="flex items-center justify-between px-1.5 pb-0.5 pt-2.5 font-mono text-[11px] text-muted">
-                <span>Rhazel A.</span>
-                <span>BSIT · Cebu, PH</span>
-              </figcaption>
             </div>
-          </motion.figure>
+          </Reveal>
         </div>
+      </div>
 
-        {/* Stats strip */}
-        <motion.dl
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-16 grid grid-cols-2 overflow-hidden rounded-2xl border border-line bg-line sm:mt-20 lg:grid-cols-4"
-          style={{ gap: '1px' }}
-        >
-          {STATS.map((stat) => (
-            <div key={stat.label} className="flex min-w-0 flex-col gap-1 bg-bg/95 p-4 sm:p-6">
-              <dt className="eyebrow order-2">{stat.label}</dt>
-              <dd className="order-1 text-xl font-semibold tracking-[-0.03em] text-fg min-[400px]:text-2xl sm:text-3xl">
-                {stat.value}
-              </dd>
-            </div>
-          ))}
-        </motion.dl>
-      </motion.div>
+      {/* "now" block */}
+      <Reveal delay={0.2}>
+        <div className="mt-12 rounded-xl border border-line bg-surface/70 font-mono text-[12.5px] backdrop-blur-sm">
+          <div className="flex items-center justify-between border-b border-line px-4 py-2.5 text-[11px] text-faint">
+            <span>rhazel@cebu: ~</span>
+            <span>now.sh</span>
+          </div>
+          <div className="space-y-1.5 px-4 py-4 leading-relaxed">
+            <p className="text-fg">
+              <span className="text-accent">$</span> now
+            </p>
+            {NOW.map((line) => (
+              <p key={line} className="text-muted">
+                <span className="text-faint">→</span> {line}
+              </p>
+            ))}
+            <p className="pt-1 text-fg">
+              <span className="text-accent">$</span> <span className="caret" aria-hidden="true" />
+            </p>
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -46,6 +46,8 @@ export interface CertificateItem {
   issuer: string;
   description: string;
   topics: string[];
+  /** Certificate image in public/assets */
+  image: string;
 }
 
 export interface PortfolioData {
@@ -512,6 +514,7 @@ resumeDownloadName: "Rhazel Alforque Resume.pdf",
       id: "cloud-data",
       certNumber: "758152",
       title: "CLOUD DATA ARCHITECTURE",
+      image: "/assets/Cloud Data Ceritification.png",
       subtitle: "Cloud Architecture & Containerization",
       year: "2026",
       issuer: "Technical Cloud Accreditation",
@@ -522,6 +525,7 @@ resumeDownloadName: "Rhazel Alforque Resume.pdf",
       id: "docker-devops",
       certNumber: "759710",
       title: "USING DOCKER FOR DEVOPS",
+      image: "/assets/Using Docker For Devops Cert.png",
       subtitle: "Introduction to Docker & Containers",
       year: "2026",
       issuer: "DevOps Professional Series",
@@ -532,6 +536,7 @@ resumeDownloadName: "Rhazel Alforque Resume.pdf",
       id: "kubernetes-admin",
       certNumber: "761125",
       title: "KUBERNETES ADMINISTRATOR",
+      image: "/assets/Kubernetes Certificate.png",
       subtitle: "Kubernetes Fundamentals for Administrators",
       year: "2026",
       issuer: "Cloud Native Computing Training",
@@ -542,6 +547,7 @@ resumeDownloadName: "Rhazel Alforque Resume.pdf",
       id: "docker-mgmt",
       certNumber: "760177",
       title: "DEVOPS WITH DOCKER",
+      image: "/assets/Devops With Docker Certificates.png",
       subtitle: "Container Management in GCP",
       year: "2026",
       issuer: "Cloud Container Specialization",

@@ -18,7 +18,6 @@ import {
   Moon,
   Volume2,
   VolumeX,
-  Users,
 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
@@ -34,7 +33,6 @@ interface CommandPaletteProps {
   darkMode: boolean;
   onToggleSound: () => void;
   soundEnabled: boolean;
-  onOpenVisitorsModal?: () => void;
 }
 
 interface PaletteItem {
@@ -57,7 +55,6 @@ export default function CommandPalette({
   darkMode,
   onToggleSound,
   soundEnabled,
-  onOpenVisitorsModal,
 }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -145,20 +142,6 @@ export default function CommandPalette({
       action: () => {
         soundManager.playTick(1000);
         onNavigate('contact');
-        onClose();
-      },
-    },
-    {
-      id: 'visitors',
-      label: 'Live Visitor Log',
-      category: 'Action',
-      shortcut: 'V',
-      icon: Users,
-      action: () => {
-        soundManager.playTick(1000);
-        if (onOpenVisitorsModal) {
-          onOpenVisitorsModal();
-        }
         onClose();
       },
     },
@@ -295,7 +278,7 @@ export default function CommandPalette({
   return (
     <div 
       id="command-palette-backdrop"
-      className="fixed inset-0 z-50 flex items-start justify-center pt-[max(4rem,env(safe-area-inset-top))] sm:pt-28 px-4 bg-neutral-950/70 backdrop-blur-xs transition-opacity duration-150 selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-[max(4rem,env(safe-area-inset-top))] sm:pt-28 px-4 bg-black/50 backdrop-blur-xs transition-opacity duration-150"
       onClick={() => {
         soundManager.playTick(800);
         onClose();
@@ -306,12 +289,12 @@ export default function CommandPalette({
     >
       <div
         id="command-palette-modal"
-        className="w-full max-w-lg overflow-hidden rounded-2xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-2xl transition-all text-neutral-900 dark:text-white"
+        className="w-full max-w-lg overflow-hidden rounded-2xl border border-line-strong bg-surface shadow-2xl transition-all text-fg"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center gap-3 border-b border-neutral-200 dark:border-neutral-800 px-4 py-3 text-neutral-500">
-          <Search className="h-4 w-4 shrink-0 text-neutral-400 dark:text-neutral-500" />
+        <div className="flex items-center gap-3 border-b border-line px-4 py-3 text-muted">
+          <Search className="h-4 w-4 shrink-0 text-faint" />
           <input
             id="command-palette-input"
             ref={inputRef}
@@ -319,9 +302,9 @@ export default function CommandPalette({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Type a command or search anything..."
-            className="w-full bg-transparent text-base sm:text-sm font-mono text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 outline-none"
+            className="w-full bg-transparent text-base sm:text-sm font-mono text-fg placeholder:text-faint outline-none"
           />
-          <kbd className="hidden sm:inline-block rounded-md border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 px-1.5 py-0.5 text-[10px] font-mono font-medium text-neutral-500">
+          <kbd className="hidden sm:inline-block rounded-md border border-line bg-surface-2 px-1.5 py-0.5 text-[10px] font-mono font-medium text-muted">
             ESC
           </kbd>
         </div>
@@ -332,7 +315,7 @@ export default function CommandPalette({
           className="max-h-[min(20rem,60dvh)] overflow-y-auto overscroll-contain p-2 divide-y divide-transparent"
         >
           {filteredItems.length === 0 ? (
-            <div className="py-8 text-center text-xs text-neutral-400 font-mono">
+            <div className="py-8 text-center text-xs text-faint font-mono">
               No matching commands found.
             </div>
           ) : (
@@ -347,27 +330,27 @@ export default function CommandPalette({
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={`w-full flex min-h-11 items-center justify-between rounded-xl px-3 py-2.5 text-left text-xs sm:text-sm font-mono transition-colors cursor-pointer ${
                     isSelected
-                      ? 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-950 dark:text-white font-medium'
-                      : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-900'
+                      ? 'bg-surface-2  text-fg  font-medium'
+                      : 'text-muted  hover:bg-surface-2 '
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className={`p-1 rounded-md ${isSelected ? 'text-neutral-950 dark:text-white' : 'text-neutral-400'}`}>
+                    <span className={`p-1 rounded-md ${isSelected ? 'text-fg ' : 'text-faint'}`}>
                       <Icon className="h-4 w-4" />
                     </span>
                     <span className="truncate">{item.label}</span>
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="hidden sm:inline text-[10px] font-mono text-neutral-400 dark:text-neutral-500 uppercase">
+                    <span className="hidden sm:inline text-[10px] font-mono text-faint uppercase">
                       {item.category}
                     </span>
                     {item.shortcut && (
-                      <kbd className="hidden sm:inline-flex h-5 items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-1.5 text-[10px] font-mono text-neutral-600 dark:text-neutral-400">
+                      <kbd className="hidden sm:inline-flex h-5 items-center justify-center rounded-md border border-line bg-surface px-1.5 text-[10px] font-mono text-muted">
                         {item.shortcut}
                       </kbd>
                     )}
-                    {isSelected && <ArrowRight className="h-3.5 w-3.5 text-neutral-950 dark:text-white" />}
+                    {isSelected && <ArrowRight className="h-3.5 w-3.5 text-fg" />}
                   </div>
                 </button>
               );
@@ -376,7 +359,7 @@ export default function CommandPalette({
         </div>
 
         {/* Footer shortcuts helper */}
-        <div className="border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40 px-4 py-2 flex items-center justify-between text-[11px] text-neutral-400 dark:text-neutral-500 font-mono">
+        <div className="border-t border-line bg-surface-2/60 px-4 py-2 flex items-center justify-between text-[11px] text-faint font-mono">
           <div className="hidden sm:flex items-center gap-2">
             <span>Navigate ↑↓</span>
             <span>·</span>

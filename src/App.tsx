@@ -2,8 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { MotionConfig } from 'motion/react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
-import ProjectList from './components/ProjectList';
-import ProjectModal from './components/ProjectModal';
+import ProjectList, { projectLink } from './components/ProjectList';
 import AppShop from './components/AppShop';
 import ExperienceTimeline from './components/ExperienceTimeline';
 import TechStack from './components/TechStack';
@@ -14,24 +13,28 @@ import CertificateModal from './components/CertificateModal';
 import ContactSection from './components/ContactSection';
 import CommandPalette from './components/CommandPalette';
 import TerminalDrawer from './components/TerminalDrawer';
-import LiveViewersBadge from './components/LiveViewersBadge';
-import { usePresence } from './utils/presence';
-import { portfolioData, Project, CertificateItem } from './data/portfolioData';
+import { portfolioData, CertificateItem } from './data/portfolioData';
 import { soundManager } from './utils/sound';
 import { openResume } from './utils/resume';
+import { navigate, pageFromPath, PAGES, usePath } from './utils/router';
+
+const PAGE_TITLES = {
+  projects: 'Projects',
+  experience: 'Experience',
+  stack: 'Stack',
+  certifications: 'Certifications',
+} as const;
+
+const HOME_SECTIONS = ['projects', 'shop', 'experience', 'github-activity', 'about', 'certifications', 'contact'];
 
 export default function App() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedCertificate, setSelectedCertificate] = useState<CertificateItem | null>(null);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
-  const [isVisitorsModalOpen, setIsVisitorsModalOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [activeSection, setActiveSection] = useState('projects');
   const [selectedTechFilter, setSelectedTechFilter] = useState<string | null>(null);
-
-  // Live Presence Tracking
-  const { presence } = usePresence(activeSection);
+  const page = pageFromPath(usePath());
 
   // Sound state
   const [soundEnabled, setSoundEnabled] = useState(() => soundManager.isEnabled());
@@ -82,11 +85,14 @@ export default function App() {
     }, 2400);
   }, []);
 
-  // Smooth navigation to section
-  const handleNavigate = useCallback((sectionId: string) => {
-    // Offset for the sticky header comes from html { scroll-padding-top }
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  // Pages get their own URL; anything else is a section of the home page.
+  const handleNavigate = useCallback((id: string) => {
+    navigate((PAGES as readonly string[]).includes(id) ? `/${id}` : `/#${id}`);
   }, []);
+
+  useEffect(() => {
+    document.title = page ? `${PAGE_TITLES[page]} · Rhazel Alforque` : 'Rhazel Alforque - Full Stack Developer';
+  }, [page]);
 
   // Global Keyboard shortcuts
   useEffect(() => {
@@ -113,7 +119,7 @@ export default function App() {
         }
       }
 
-      if (isInput) return;
+      if (isInput || e.metaKey || e.ctrlKey || e.altKey) return;
 
       if (e.key === 'g' || e.key === 'G') {
         e.preventDefault();
@@ -142,9 +148,13 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
   }, [handleNavigate, handleToggleTheme]);
 
-  // Section Observer for active scroll state
+  // Section Observer for active scroll state (home page only)
   useEffect(() => {
-    const sections = ['projects', 'shop', 'experience', 'stack', 'about', 'certifications', 'contact'];
+    if (page) {
+      setActiveSection(page);
+      return;
+    }
+    setActiveSection('top');
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -156,19 +166,19 @@ export default function App() {
       { rootMargin: '-30% 0px -50% 0px' }
     );
 
-    sections.forEach((id) => {
+    HOME_SECTIONS.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [page]);
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="relative min-h-screen bg-bg font-sans text-fg antialiased">
+    <div className="relative min-h-screen bg-bg font-sans text-fg antialiased lg:pl-56">
       <a
-        href="#projects"
+        href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:text-bg"
       >
         Skip to content
@@ -184,98 +194,61 @@ export default function App() {
         onOpenTerminal={() => setIsTerminalOpen(true)}
       />
 
-      {/* Main Container */}
-      <main>
-        {/* Hero Section */}
-        <Hero
-          onCopyEmail={handleCopyEmail}
-          copied={copiedEmail}
-          onOpenTerminal={() => setIsTerminalOpen(true)}
-          onlineCount={presence.onlineCount}
-          activeViewers={presence.activeViewers}
-          onOpenVisitorsModal={() => setIsVisitorsModalOpen(true)}
-        />
+      {/* Soft sun glow in the corner */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed -right-40 -top-40 z-0 h-[36rem] w-[36rem] rounded-full"
+        style={{ background: 'radial-gradient(circle, var(--sun), transparent 65%)' }}
+      />
 
-        {/* 01 Projects List */}
-        <ProjectList
-          projects={portfolioData.projects}
-          onSelectProject={(project) => setSelectedProject(project)}
-          selectedTechFilter={selectedTechFilter}
-          onClearTechFilter={() => setSelectedTechFilter(null)}
-        />
+      <main id="main" className="relative z-10">
+        <div className="container-page">
+          {page === 'projects' ? (
+            <ProjectList
+              projects={portfolioData.projects}
+              selectedTechFilter={selectedTechFilter}
+              onClearTechFilter={() => setSelectedTechFilter(null)}
+            />
+          ) : page === 'experience' ? (
+            <ExperienceTimeline />
+          ) : page === 'stack' ? (
+            <TechStack
+              selectedTech={selectedTechFilter}
+              onSelectTech={setSelectedTechFilter}
+              projects={portfolioData.projects}
+            />
+          ) : page === 'certifications' ? (
+            <CertificationsList onSelectCertificate={setSelectedCertificate} />
+          ) : (
+            <>
+              <Hero onCopyEmail={handleCopyEmail} copied={copiedEmail} />
+              <ProjectList mode="preview" projects={portfolioData.projects} />
+              <AppShop />
+              <ExperienceTimeline mode="preview" />
+              <GitHubActivity darkMode={darkMode} />
+              <AboutSection />
+              <CertificationsList mode="preview" onSelectCertificate={setSelectedCertificate} />
+            </>
+          )}
 
-        {/* 02 App Shop */}
-        <AppShop />
-
-        {/* 03 Experience Timeline */}
-        <ExperienceTimeline />
-
-        {/* 03 Technology Stack */}
-        <TechStack
-          selectedTech={selectedTechFilter}
-          onSelectTech={(tech) =>
-            setSelectedTechFilter((prev) => (prev === tech ? null : tech))
-          }
-          projects={portfolioData.projects}
-        />
-
-        {/* 04 GitHub Contribution Graph */}
-        <GitHubActivity darkMode={darkMode} />
-
-        {/* 05 About Section */}
-        <AboutSection
-        />
-
-        {/* 06 Certifications List */}
-        <CertificationsList
-          onSelectCertificate={(cert) => setSelectedCertificate(cert)}
-        />
-
-        {/* 07 Contact Section */}
-        <ContactSection
-          onCopyEmail={handleCopyEmail}
-          copied={copiedEmail}
-        />
+          <ContactSection onCopyEmail={handleCopyEmail} copied={copiedEmail} index={page ? undefined : '07'} />
+        </div>
       </main>
 
       {/* Developer CLI Terminal Drawer */}
       <TerminalDrawer
         isOpen={isTerminalOpen}
         onClose={() => setIsTerminalOpen(false)}
-        onOpenProject={(project) => setSelectedProject(project)}
+        onOpenProject={(project) => {
+          const link = projectLink(project);
+          if (link) window.open(link.href, '_blank', 'noopener,noreferrer');
+        }}
         onOpenResume={openResume}
         onToggleTheme={handleToggleTheme}
         darkMode={darkMode}
         onCopyEmail={handleCopyEmail}
-        onOpenVisitorsModal={() => setIsVisitorsModalOpen(true)}
       />
 
-      {/* Floating CLI Launcher Pill */}
-      {!isTerminalOpen && (
-        <button
-          id="floating-terminal-trigger"
-          onClick={() => {
-            soundManager.playTick(1200);
-            setIsTerminalOpen(true);
-          }}
-          className="fixed bottom-5 right-5 z-30 hidden cursor-pointer items-center gap-2 rounded-full border border-line bg-surface/90 px-3.5 py-2 font-mono text-xs text-fg shadow-lg backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong sm:inline-flex"
-          title="Open Interactive Developer CLI (Shortcut: ~)"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
-          <span className="font-medium">&gt;_ terminal</span>
-          <kbd className="rounded bg-surface-2 px-1.5 py-0.5 text-[10px] text-muted">
-            ~
-          </kbd>
-        </button>
-      )}
-
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
 
       <CertificateModal
         certificate={selectedCertificate}
@@ -293,7 +266,6 @@ export default function App() {
         darkMode={darkMode}
         onToggleSound={handleToggleSound}
         soundEnabled={soundEnabled}
-        onOpenVisitorsModal={() => setIsVisitorsModalOpen(true)}
       />
     </div>
     </MotionConfig>

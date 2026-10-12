@@ -1,20 +1,12 @@
-import { ArrowUpRight, Box, Layers, Cpu, Cloud, Award } from 'lucide-react';
 import { portfolioData, CertificateItem } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
-import Section, { Em } from './ui/Section';
+import Section, { AllLink, PageHeader } from './ui/Section';
 import Reveal from './ui/Reveal';
 
 interface CertificationsListProps {
   onSelectCertificate: (certificate: CertificateItem) => void;
-}
-
-function getCertIcon(title: string) {
-  const lower = title.toLowerCase();
-  if (lower.includes('kubernetes')) return Cpu;
-  if (lower.includes('container') || lower.includes('devops with')) return Layers;
-  if (lower.includes('docker')) return Box;
-  if (lower.includes('cloud') || lower.includes('architecture')) return Cloud;
-  return Award;
+  /** "preview" shows a couple on the home page; "page" is the full /certifications list */
+  mode?: 'preview' | 'page';
 }
 
 // Data titles are stored uppercase; render them in title case.
@@ -22,62 +14,54 @@ function toTitleCase(s: string) {
   return s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()).replace(/\bDevops\b/g, 'DevOps');
 }
 
-export default function CertificationsList({ onSelectCertificate }: CertificationsListProps) {
+export default function CertificationsList({ onSelectCertificate, mode = 'page' }: CertificationsListProps) {
+  const all = portfolioData.certifications;
+  const items = mode === 'preview' ? all.slice(0, 2) : all;
+
+  const list = (
+    <Reveal>
+      <ul className="divide-y divide-line border-y border-line">
+        {items.map((cert) => (
+          <li key={cert.id}>
+            <button
+              id={`cert-card-${cert.id}`}
+              type="button"
+              onClick={() => {
+                soundManager.playTick(1000);
+                onSelectCertificate(cert);
+              }}
+              className="group flex w-full cursor-pointer items-baseline justify-between gap-6 py-5 text-left transition-colors hover:bg-accent-soft"
+            >
+              <div className="min-w-0">
+                <h3 className="truncate text-[15px] font-medium text-fg transition-colors group-hover:text-muted">
+                  {toTitleCase(cert.title)}
+                </h3>
+                <p className="mt-1 truncate text-sm text-muted">{cert.subtitle}</p>
+              </div>
+              <span className="shrink-0 font-mono text-[12px] text-faint">{cert.year}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </Reveal>
+  );
+
+  if (mode === 'preview') {
+    return (
+      <Section id="certifications" index="06" label="certifications" aside={<AllLink to="/certifications">all {all.length}</AllLink>}>
+        {list}
+      </Section>
+    );
+  }
+
   return (
-    <Section
-      id="certifications"
-      index="07"
-      label="Credentials"
-      title={
-        <>
-          Cloud &amp; DevOps <Em>credentials</Em>
-        </>
-      }
-      intro="Training across cloud architecture, Docker containerization, and Kubernetes administration. Select one to view the certificate."
-    >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {portfolioData.certifications.map((cert, i) => {
-          const Icon = getCertIcon(cert.title);
-          return (
-            <Reveal key={cert.id} delay={(i % 2) * 0.08} className="h-full">
-              <button
-                id={`cert-card-${cert.id}`}
-                type="button"
-                onClick={() => {
-                  soundManager.playTick(1000);
-                  onSelectCertificate(cert);
-                }}
-                className="group flex h-full w-full cursor-pointer flex-col rounded-2xl border border-line bg-surface p-6 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-2 text-fg transition-colors group-hover:bg-accent group-hover:text-on-accent">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <span className="font-mono text-[11px] text-faint">{cert.year}</span>
-                </div>
-
-                <h3 className="mt-6 text-lg font-semibold tracking-[-0.02em] text-fg">{toTitleCase(cert.title)}</h3>
-                <p className="mt-1 text-sm text-muted">{cert.subtitle}</p>
-
-                <div className="mb-6 mt-5 flex flex-wrap gap-1.5">
-                  {cert.topics.map((topic) => (
-                    <span key={topic} className="rounded-full bg-surface-2 px-2.5 py-1 font-mono text-[11px] text-muted">
-                      {topic}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-auto flex items-center justify-between border-t border-line pt-4 font-mono text-[11px] text-muted">
-                  <span>#{cert.certNumber}</span>
-                  <span className="inline-flex items-center gap-1 transition-colors group-hover:text-accent">
-                    View certificate <ArrowUpRight className="h-3 w-3" />
-                  </span>
-                </div>
-              </button>
-            </Reveal>
-          );
-        })}
-      </div>
-    </Section>
+    <div id="certifications">
+      <PageHeader
+        title="Certifications"
+        count={`${all.length} total`}
+        intro="Training across cloud architecture, Docker containerization and Kubernetes administration. Select one to view the certificate."
+      />
+      <div className="pb-14">{list}</div>
+    </div>
   );
 }
