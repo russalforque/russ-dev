@@ -194,11 +194,11 @@ export default function App() {
         onOpenTerminal={() => setIsTerminalOpen(true)}
       />
 
-      {/* Soft sun glow in the corner */}
+      {/* Soft accent glow in the corner */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed -right-40 -top-40 z-0 h-[36rem] w-[36rem] rounded-full"
-        style={{ background: 'radial-gradient(circle, var(--sun), transparent 65%)' }}
+        style={{ background: 'radial-gradient(circle, var(--glow), transparent 65%)' }}
       />
 
       <main id="main" className="relative z-10">

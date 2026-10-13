@@ -8,7 +8,7 @@
    place; @theme inline exposes them as Tailwind utilities
    (bg-bg, text-fg, border-line, text-accent, ...).
 ------------------------------------------------------------------- */
-/* Ink on paper, zinc greys, and one warm sun-gold accent (the sun on the PH flag) */
+/* Ink on paper, zinc greys, and one cobalt-blue accent */
 :root {
   --bg: #ffffff;
   --surface: #ffffff;
@@ -18,10 +18,10 @@
   --fg: #0a0a0a;
   --muted: #71717a;
   --faint: #a1a1aa;
-  --accent: #b45309;
-  --accent-soft: rgba(180, 83, 9, 0.06);
+  --accent: #1d4ed8;
+  --accent-soft: rgba(29, 78, 216, 0.06);
   --on-accent: #ffffff;
-  --sun: rgba(245, 158, 11, 0.16);
+  --glow: rgba(59, 110, 245, 0.14);
 }
 
 .dark {
@@ -33,10 +33,10 @@
   --fg: #f4f4f5;
   --muted: #a0a0a8;
   --faint: #6b6b73;
-  --accent: #f5b544;
-  --accent-soft: rgba(245, 181, 68, 0.07);
+  --accent: #7aa2ff;
+  --accent-soft: rgba(122, 162, 255, 0.08);
   --on-accent: #0c0c0f;
-  --sun: rgba(245, 181, 68, 0.09);
+  --glow: rgba(122, 162, 255, 0.1);
 }
 
 @theme inline {

@@ -48,8 +48,8 @@ export default function GitHubActivity({ darkMode }: GitHubActivityProps) {
             blockRadius={2}
             fontSize={11}
             theme={{
-              light: ['#f4f4f5', '#fde7bd', '#f5b544', '#d97706', '#b45309'],
-              dark: ['#1e1e22', '#4a3612', '#8a6217', '#d4962a', '#f5b544'],
+              light: ['#f4f4f5', '#dbe4ff', '#93b4ff', '#3b6ef5', '#1d4ed8'],
+              dark: ['#1e1e22', '#1b2a4f', '#2a4a94', '#4f7ae6', '#7aa2ff'],
             }}
           />
         </div>
