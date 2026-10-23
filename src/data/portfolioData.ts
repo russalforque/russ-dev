@@ -457,6 +457,54 @@ resumeDownloadName: "Rhazel Alforque Resume.pdf",
 
   githubUrl: "https://github.com/russalforque"
 },
+
+
+{
+  id: "rentlio",
+  featured: true,
+  number: "13",
+  title: "Rentlio",
+  tagline: "Modern rental and tenant management platform",
+  category: "Full Stack",
+  role: "Full-Stack Developer",
+  systemType: "Rental Management System",
+
+  description: "A full-stack rental management web application designed to simplify property operations for landlords and tenants. Built with React, TypeScript, Tailwind CSS, and Supabase, Rentlio provides a centralized platform for managing rooms, tenant accounts, rent collection, utility billing, expenses, and financial reports.",
+
+  problem: "Small property owners often rely on handwritten records, spreadsheets, and manual calculations to manage rent, electricity, water bills, and tenant payments. This can lead to billing errors, inefficient recordkeeping, and limited financial visibility.",
+
+  solution: "Developed a responsive, role-based rental management system with dedicated Landlord and Tenant portals. Automated utility billing calculations, centralized payment records, and introduced financial reporting tools to improve accuracy and simplify daily property operations.",
+
+  technologies: [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Supabase",
+    "PostgreSQL",
+    "Vercel"
+  ],
+
+  features: [
+    "Role-based Landlord and Tenant dashboards",
+    "Room and tenant account management",
+    "Rent, electricity, and water billing",
+    "Utility meter reading and consumption calculations",
+    "Online and in-person payment recording",
+    "Payment receipt uploads and verification",
+    "Tenant billing history and payment tracking",
+    "Income, expense, and cash-on-hand monitoring",
+    "Downloadable daily financial reports",
+    "Tenant registration with landlord approval",
+    "Responsive mobile, tablet, and desktop interfaces",
+    "Centralized cloud database with Supabase"
+  ],
+
+  highlights: "Built a full-stack rental management platform designed for a 28-room property, featuring automated utility billing, tenant self-service, payment tracking, and daily financial reporting.",
+
+  liveUrl: "https://rentlio-iota.vercel.app/login",
+  githubUrl: "https://github.com/russalforque"
+},
+
   ],
 
   experience: [
