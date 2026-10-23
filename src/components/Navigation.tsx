@@ -130,7 +130,7 @@ export default function Navigation({
       onClick={() => setMenuOpen(false)}
       className="font-serif text-[22px] italic leading-none text-fg transition-opacity hover:opacity-60"
     >
-      Rhazel Alforque
+     <b>Rhazel </b> 
     </Link>
   );
 
